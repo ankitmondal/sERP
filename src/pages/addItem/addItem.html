@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Add Item</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item-group>
+    <ion-item>
+      <ion-label fixed>Item Name</ion-label>
+      <ion-input type="text" [(ngModel)]="ItemName"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label fixed>Category</ion-label>
+      <ion-select [(ngModel)]="Category">
+        <ion-option value="deity">Deity Ornaments</ion-option>
+        <ion-option value="filigree">Filigree</ion-option>
+        <ion-option value="jewellery">Jewellery</ion-option>
+        <ion-option value="pooja">Pooja Article</ion-option>
+        <ion-option value="showpieces">Showpieces</ion-option>
+        <ion-option value="utensils">Utensils</ion-option>
+        <ion-option value="others">Others</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-buttons>
+      <button ion-button icon-left (click)="presentActionSheet()">
+        <ion-icon name="camera"></ion-icon>Select Image
+      </button>
+      <button ion-button icon-left (click)="uploadImage()" [disabled]="lastImage === null">
+        <ion-icon name="cloud-upload"></ion-icon>Upload
+      </button>
+    </ion-buttons>
+  </ion-item-group>
+  <button ion-button block (click)='addItem();'>Save</button>
+  <br>
+  <ion-card>
+    <ion-card-header>
+      Added Items
+    </ion-card-header>
+    <ion-list>
+      <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
+        <ion-icon [name]="item.icon" item-start></ion-icon>
+        {{item.title}}
+        <div class="item-note" item-end>
+          {{item.note}}
+        </div>
+      </button>
+    </ion-list>
+    <div *ngIf="selectedItem" padding>
+      You navigated here from
+      <b>{{selectedItem.title}}</b>
+    </div>
+  </ion-card>
+</ion-content>

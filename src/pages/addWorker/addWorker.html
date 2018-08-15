@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title >Add Worker</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-item-group>
+        <!-- <ion-item-divider color="light">
+          <ion-checkbox color="dark" [(ngModel)]="blnSchedule"></ion-checkbox>
+          <ion-label>
+            Schedule your plug timing
+          </ion-label>
+        </ion-item-divider> -->
+        <ion-item>
+            <ion-label fixed>Worker Name</ion-label>
+            <ion-input type="text" [(ngModel)]="WorkerName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label fixed>Age</ion-label>
+          <ion-input type="number" [(ngModel)]="age" ></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label fixed>Address</ion-label>
+            <ion-input type="text" [(ngModel)]="address"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label fixed>Contact</ion-label>
+              <ion-input type="tel" [(ngModel)]="phoneNumber"></ion-input>
+            </ion-item>
+      </ion-item-group>
+      <button ion-button block (click)='addWorker();'>Save</button>
+      <br/>
+  <ion-card>
+    <ion-card-header>
+      Added Items
+    </ion-card-header>
+    <ion-list>
+      <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
+        <ion-icon [name]="item.icon" item-start></ion-icon>
+        {{item.title}}
+        <div class="item-note" item-end>
+          {{item.note}}
+        </div>
+      </button>
+    </ion-list>
+  </ion-card>
+</ion-content>

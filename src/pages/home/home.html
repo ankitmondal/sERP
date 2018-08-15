@@ -1,0 +1,100 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-header>
+      Active Order from Clients(Item Wise)
+    </ion-card-header>
+    <ion-list>
+      <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
+        <ion-icon [name]="item.icon" item-start></ion-icon>
+        {{item.title}}
+        <div class="item-note" item-end>
+          {{item.note}}
+        </div>
+      </button>
+    </ion-list>
+   
+  </ion-card>
+  <ion-card>
+      <ion-card-header>
+        Active Order from Clients(Client Wise)
+      </ion-card-header>
+      <ion-list>
+        <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
+          <ion-icon [name]="item.icon" item-start></ion-icon>
+          {{item.title}}
+          <div class="item-note" item-end>
+            {{item.note}}
+          </div>
+        </button>
+      </ion-list>
+     
+    </ion-card>
+  <br/>
+  <ion-card>
+      <ion-card-header>
+        Active Order with Workers
+      </ion-card-header>
+      <ion-list>
+        <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
+            <ion-avatar item-start>
+                <img src="assets/imgs/logo.png">
+              </ion-avatar>
+          {{item.title}}
+          <div class="item-note" item-end>
+            {{item.note}}
+          </div>
+        </button>
+      </ion-list>
+     
+    </ion-card>
+
+    <ion-card>
+        <ion-card-header>
+          Blanace Sheet(Client Side)
+        </ion-card-header>
+        <ion-list>
+          <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
+              <ion-avatar item-start>
+                  <img src="assets/imgs/logo.png">
+                </ion-avatar>
+            {{item.title}}
+            <div class="item-note" item-end>
+              {{item.note}}
+            </div>
+          </button>
+          <ion-item class="total">
+            <ion-label style="font:bold">Total :  </ion-label>
+          </ion-item>
+        </ion-list>
+       
+      </ion-card>
+      <ion-card>
+          <ion-card-header>
+            Blanace Sheet(Worker Side)
+          </ion-card-header>
+          <ion-list>
+            <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
+                <ion-avatar item-start>
+                    <img src="assets/imgs/logo.png">
+                  </ion-avatar>
+              {{item.title}}
+              <div class="item-note" item-end>
+                {{item.note}}
+              </div>
+            </button>
+            <ion-item class="total">
+                <ion-label style="font:bold">Total :  </ion-label>
+              </ion-item>
+          </ion-list>
+          
+        </ion-card>
+</ion-content>

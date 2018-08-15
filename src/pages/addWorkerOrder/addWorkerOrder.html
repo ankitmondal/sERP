@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Place Order</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item-group>
+    <ion-item>
+      <ion-label fixed>Worker Name</ion-label>
+      <ion-select [(ngModel)]="WorkerName">
+          <ion-option *ngFor="let worker of Workers" [value]="worker.Id">{{worker.Name}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label fixed>Item</ion-label>
+      <ion-select [(ngModel)]="ItemName">
+          <ion-option *ngFor="let item of Items" [value]="item.Id">{{item.Name}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label fixed>Quantity</ion-label>
+      <ion-input type="number" [(ngModel)]="Quantity"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label fixed>Melt</ion-label>
+      <ion-input type="number" [(ngModel)]="Melt"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Expected Date</ion-label>
+      <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="ExpectedDate"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label fixed>Advance</ion-label>
+      <ion-input type="number" [(ngModel)]="AdvanceAmount"></ion-input>
+    </ion-item>
+  </ion-item-group>
+  <button ion-button block (click)='addWorkerOrder();'>Save</button>
+</ion-content>

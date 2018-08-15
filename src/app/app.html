@@ -1,0 +1,34 @@
+<ion-menu [content]="content">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-item-group>
+      <button menuClose ion-item (click)="goToPage('Home')"> Home</button>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider color="secondary">Admin</ion-item-divider>
+      <button menuClose ion-item (click)="goToPage('addWorker')"> Add Worker</button>
+      <button menuClose ion-item (click)="goToPage('Buyer')"> Add Buyer</button>
+      <button menuClose ion-item (click)="goToPage('Item')"> Add Item</button>
+      <button menuClose ion-item (click)="goToPage('Capital')"> Add Capital</button>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider color="secondary">Worker</ion-item-divider>
+      <button menuClose ion-item (click)="goToPage('placeOrder')"> Place Order </button>
+      <button menuClose ion-item (click)="goToPage('purchaseItem')"> Purchase </button>
+    </ion-item-group>
+    <ion-item-group>
+      <ion-item-divider color="secondary">Buyer</ion-item-divider>
+      <button menuClose ion-item (click)="goToPage('acceptOrder')"> Add Order </button>
+      <button menuClose ion-item (click)="goToPage('sale')"> Sale </button>
+    </ion-item-group>
+  </ion-content>
+
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

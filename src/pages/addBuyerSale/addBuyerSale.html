@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Sale</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div [hidden]="submitted">
+    <ion-item-group>
+      <ion-item>
+        <ion-label fixed>Client Name</ion-label>
+        <ion-select [(ngModel)]="ClientName">
+          <ion-option *ngFor="let client of Clients" [value]="client.Id">{{client.Name}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label fixed>Item</ion-label>
+        <ion-select [(ngModel)]="ItemName">
+          <ion-option *ngFor="let item of Items" [value]="item.Id">{{item.Name}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label fixed>Quantity</ion-label>
+        <ion-input type="number" [(ngModel)]="Quantity"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label fixed>Melt</ion-label>
+        <ion-input type="number" [(ngModel)]="Melt"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Wastage</ion-label>
+        <ion-input type="number" [(ngModel)]="Wastage"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Payment : {{Melt*1 + Wastage*1}} </ion-label>
+        <ion-input type="number" [(ngModel)]="Payment"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Fine : </ion-label>
+        <ion-label>{{Fine}}</ion-label>
+      </ion-item>
+
+    </ion-item-group>
+    <ion-buttons>
+      <button ion-button icon-left (click)="calculate();">
+        <ion-icon name="calculator"></ion-icon>Calculate
+      </button>
+      <button ion-button icon-left (click)="presentModal();" [disabled]="Fine === null || Fine === 0">
+        <ion-icon name="cloud-upload"></ion-icon>Save
+      </button>
+    </ion-buttons>
+  </div>
+
+
+  <div [hidden]="!submitted">
+    <ion-item-group>
+      <ion-item>
+        <ion-label>Fine :{{Fine}} </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label> Pay </ion-label>
+        <ion-input type="number" [(ngModel)]="MetalPaid"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Balance : {{Fine-MetalPaid}}</ion-label>
+      </ion-item>
+    </ion-item-group>
+    <button ion-button block (click)='purchaseFromWorker();'>Save</button>
+  </div>
+
+</ion-content>

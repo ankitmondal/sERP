@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Add Buyer</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item-group>
+    <ion-item>
+      <ion-label fixed>Client Name</ion-label>
+      <ion-input type="text" [(ngModel)]="ClientName"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Address Line 1</ion-label>
+      <ion-input type="text" [(ngModel)]="address1"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Address Line 2</ion-label>
+      <ion-input type="text" [(ngModel)]="address2"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label fixed>Contact</ion-label>
+      <ion-input type="tel" [(ngModel)]="phoneNumber"></ion-input>
+    </ion-item>
+  </ion-item-group>
+  <button ion-button block (click)='addBuyer();'>Save</button>
+
+  <br/>
+  <ion-card>
+    <ion-card-header>
+      Added Items
+    </ion-card-header>
+    <ion-list>
+      <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
+        <ion-icon [name]="item.icon" item-start></ion-icon>
+        {{item.title}}
+        <div class="item-note" item-end>
+          {{item.note}}
+        </div>
+      </button>
+    </ion-list>
+  </ion-card>
+</ion-content>
