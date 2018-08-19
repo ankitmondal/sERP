@@ -5,6 +5,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+import { LoginPage } from '../pages/login/login';
 
 import { addWorker } from '../pages/addWorker/addWorker'
 import { addBuyer } from '../pages/addBuyer/addBuyer'
@@ -23,6 +24,7 @@ import { File } from '@ionic-native/file';
 import { Transfer } from '@ionic-native/transfer';
 import { FilePath } from '@ionic-native/file-path';
 import { Camera } from '@ionic-native/camera';
+import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,8 @@ import { Camera } from '@ionic-native/camera';
     addWorkerOrder,
     addWorkerPurchase,
     addBuyerOrder,
-    addBuyerSale
+    addBuyerSale,
+    LoginPage
   ],
   imports: [
     BrowserModule,
@@ -54,7 +57,8 @@ import { Camera } from '@ionic-native/camera';
     addWorkerOrder,
     addWorkerPurchase,
     addBuyerOrder,
-    addBuyerSale
+    addBuyerSale,
+    LoginPage
   ],
   providers: [
     StatusBar,
@@ -63,7 +67,8 @@ import { Camera } from '@ionic-native/camera';
     Transfer,
     Camera,
     FilePath,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    AuthServiceProvider
   ]
 })
 export class AppModule {}
