@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -22,17 +22,29 @@ export class User {
 @Injectable()
 export class AuthServiceProvider {
   currentUser: User;
-
+  rootUrl: 'http://localhost:50693/';
   public login(credentials) {
     if (credentials.email === null || credentials.password === null) {
       return Observable.throw("Please insert credentials");
     } else {
       return Observable.create(observer => {
         // At this point make a request to your backend to make a real check!
-        let access = (credentials.password === "pass" && credentials.email === "email");
-        this.currentUser = new User('Tam', 'tam@devControl.com');
-        observer.next(access);
-        observer.complete();
+        // let access = (credentials.password === "pass" && credentials.email === "email");
+        // this.currentUser = new User('Tam', 'tam@devControl.com');
+        
+
+        var data = "username=" + credentials.email + "&password=" + credentials.password + "&grant_type=password";
+        var reqHeader = new HttpHeaders({ 'Content-Type': 'application/x-www-urlencoded','No-Auth':'True' });
+         this.http.post('http://localhost:50693/token', data, { headers: reqHeader })
+         .map((result: Response) => result.json)
+         .subscribe(result => {
+          console.log(result);
+        }, error => {
+          console.log(error);// Error getting the data
+        });
+      
+         observer.next(true);
+         observer.complete();
       });
     }
   }
@@ -47,10 +59,11 @@ export class AuthServiceProvider {
       this.currentUser = null;
       observer.next(true);
       observer.complete();
+      
     });
   }
-  // constructor(public http: HttpClient) {
-  //   console.log('Hello AuthServiceProvider Provider');
-  // }
+  constructor(public http: HttpClient) {
+    console.log('Hello AuthServiceProvider Provider');
+  }
 
 }
