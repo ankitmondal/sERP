@@ -23,30 +23,50 @@ export class User {
 export class AuthServiceProvider {
   currentUser: User;
   rootUrl: 'http://localhost:50693/';
-  public login(credentials) {
-    if (credentials.email === null || credentials.password === null) {
-      return Observable.throw("Please insert credentials");
-    } else {
-      return Observable.create(observer => {
-        // At this point make a request to your backend to make a real check!
-        // let access = (credentials.password === "pass" && credentials.email === "email");
-        // this.currentUser = new User('Tam', 'tam@devControl.com');
-        
 
-        var data = "username=" + credentials.email + "&password=" + credentials.password + "&grant_type=password";
-        var reqHeader = new HttpHeaders({ 'Content-Type': 'application/x-www-urlencoded','No-Auth':'True' });
-         this.http.post('http://localhost:50693/token', data, { headers: reqHeader })
-         .map((result: Response) => result.json)
-         .subscribe(result => {
-          console.log(result);
-        }, error => {
-          console.log(error);// Error getting the data
-        });
+  constructor(public http: HttpClient) {
+    console.log('Hello AuthServiceProvider Provider');
+  }
+
+  public login(credentials) {
+    credentials.email="ankitmondalece@gmail.com";
+    credentials.password="Abcdef#2";
+    
+    var data = "username=" + credentials.email + "&password=" + credentials.password + "&grant_type=password";
+    var reqHeader = new HttpHeaders({ 'Content-Type': 'application/x-www-urlencoded','No-Auth':'True' });
+    return this.http.post('http://localhost:50693/token', data, { headers: reqHeader });
+
+    // if (credentials.email === null || credentials.password === null) {
+    //   return Observable.throw("Please insert credentials");
+    // } else {
+    //   return Observable.create(observer => {
+    //     // At this point make a request to your backend to make a real check!
+    //     //let access = (credentials.password === "pass" && credentials.email === "email");
+    //     this.currentUser = new User('Ankit', 'ankitmondalece@gmail.com');
+        
+    //     credentials.email="ankitmondalece@gmail.com";
+    //     credentials.password="Abcdef#2";
+
+    //     var data = "username=" + credentials.email + "&password=" + credentials.password + "&grant_type=password";
+    //     // var data = "username=" + userName + "&password=" + password + "&grant_type=password";
+    //     var reqHeader = new HttpHeaders({ 'Content-Type': 'application/x-www-urlencoded','No-Auth':'True' });
+    //     return this.http.post(this.rootUrl + '/token', data, { headers: reqHeader });
+
+    //     // var data = "username=" + credentials.email + "&password=" + credentials.password + "&grant_type=password";
+    //     // var reqHeader = new HttpHeaders({ 'Content-Type': 'application/x-www-urlencoded','No-Auth':'True' });
+    //     //  this.http.post('http://localhost:50693/token', data, { headers: reqHeader })
+    //     //  .map((result: Response) => result.json)
+    //     //  .subscribe(result => {
+    //     //    console.log("token");
+    //     //   console.log(result);
+    //     // }, error => {
+    //     //   console.log(error);// Error getting the data
+    //     // });
       
-         observer.next(true);
-         observer.complete();
-      });
-    }
+    //     //  observer.next(false);
+    //     //  observer.complete();
+    //   });
+    // }
   }
 
 
@@ -59,11 +79,6 @@ export class AuthServiceProvider {
       this.currentUser = null;
       observer.next(true);
       observer.complete();
-      
     });
   }
-  constructor(public http: HttpClient) {
-    console.log('Hello AuthServiceProvider Provider');
-  }
-
 }

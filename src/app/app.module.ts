@@ -25,6 +25,7 @@ import { Transfer } from '@ionic-native/transfer';
 import { FilePath } from '@ionic-native/file-path';
 import { Camera } from '@ionic-native/camera';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+import { AdminServiceProvider } from '../providers/admin-service/admin-service';
 
 //API Call Related
 import { HttpModule } from '@angular/http';
@@ -74,7 +75,8 @@ import { HttpClientModule } from '@angular/common/http';
     Camera,
     FilePath,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthServiceProvider
+    AuthServiceProvider,
+    AdminServiceProvider
   ]
 })
 export class AppModule {}
