@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-
+import { AdminServiceProvider } from '../../providers/admin-service/admin-service';
 @Component({
   selector: 'page-addWorkerOrder',
   templateUrl: 'addWorkerOrder.html'
@@ -15,10 +15,21 @@ export class addWorkerOrder {
   Workers: Array<{Name: string, Id: string}>;
   Items:Array<{Name:string,Id:string}>;
 
-  constructor(public navCtrl: NavController) {
-      this.Workers=[{Name:"Ankit",Id:"AM"},
-                    {Name:"Purnendu",Id:"PM"},
-                    {Name:"Sukhendu",Id:"SM"}];
+  constructor(public navCtrl: NavController,public adminService:AdminServiceProvider) {
+
+    this.adminService.GetWorker()
+    .subscribe((myWorkers:any) => {
+      console.log(myWorkers);
+      this.Workers = myWorkers;
+    },
+      (error:any) => {
+        console.log(error);
+      });
+    
+
+      // this.Workers=[{Name:"Ankit",Id:"AM"},
+      //               {Name:"Purnendu",Id:"PM"},
+      //               {Name:"Sukhendu",Id:"SM"}];
 
       this.Items=[{Name:"Dish",Id:"D"},
                   {Name:"Plate",Id:"P"},
