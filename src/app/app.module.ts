@@ -30,6 +30,7 @@ import { AdminServiceProvider } from '../providers/admin-service/admin-service';
 //API Call Related
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
+import { UserServiceProvider } from '../providers/user-service/user-service';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { HttpClientModule } from '@angular/common/http';
     FilePath,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,
-    AdminServiceProvider
+    AdminServiceProvider,
+    UserServiceProvider
   ]
 })
 export class AppModule {}

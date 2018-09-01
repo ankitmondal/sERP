@@ -13,13 +13,13 @@
       <ion-item>
         <ion-label fixed>Worker Name</ion-label>
         <ion-select [(ngModel)]="WorkerName">
-          <ion-option *ngFor="let worker of Workers" [value]="worker.Id">{{worker.Name}}</ion-option>
+          <ion-option *ngFor="let worker of Workers" [value]="worker.kId">{{worker.workerName}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label fixed>Item</ion-label>
         <ion-select [(ngModel)]="ItemName">
-          <ion-option *ngFor="let item of Items" [value]="item.Id">{{item.Name}}</ion-option>
+          <ion-option *ngFor="let item of Items" [value]="item.itemID">{{item.itemName}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item>

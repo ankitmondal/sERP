@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { AdminServiceProvider } from '../../providers/admin-service/admin-service';
+import { UserServiceProvider } from '../../providers/user-service/user-service';
 @Component({
   selector: 'page-addWorkerOrder',
   templateUrl: 'addWorkerOrder.html'
@@ -12,12 +13,12 @@ export class addWorkerOrder {
   Melt:number;
   ExpectedDate:Date;
   AdvanceAmount:number;
-  Workers: Array<{Name: string, Id: string}>;
-  Items:Array<{Name:string,Id:string}>;
+  Workers: any;//Array<{Name: string, Id: string}>;
+  Items:any;//Array<{Name:string,Id:string}>;
 
-  constructor(public navCtrl: NavController,public adminService:AdminServiceProvider) {
+  constructor(public navCtrl: NavController,public adminService:AdminServiceProvider,public userService:UserServiceProvider) {
 
-    this.adminService.GetWorker()
+    this.userService.GetWorker()
     .subscribe((myWorkers:any) => {
       console.log(myWorkers);
       this.Workers = myWorkers;
@@ -31,9 +32,17 @@ export class addWorkerOrder {
       //               {Name:"Purnendu",Id:"PM"},
       //               {Name:"Sukhendu",Id:"SM"}];
 
-      this.Items=[{Name:"Dish",Id:"D"},
-                  {Name:"Plate",Id:"P"},
-                  {Name:"Bowl",Id:"B"}]
+      this.userService.GetMyItems()
+    .subscribe((myItems:any) => {
+      console.log(myItems);
+      this.Items = myItems;
+    },
+      (error:any) => {
+        console.log(error);
+      });
+      // this.Items=[{Name:"Dish",Id:"D"},
+      //             {Name:"Plate",Id:"P"},
+      //             {Name:"Bowl",Id:"B"}]
   }
   addWorkerOrder() {
     console.log(this.WorkerName + this.ItemName + this.Quantity + this.Melt + 

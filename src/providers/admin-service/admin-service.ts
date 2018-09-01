@@ -20,16 +20,6 @@ export class AdminServiceProvider {
     return this.http.post('http://localhost:50693/api/SilverERPWorker?WorkerName="Ankit"',httpOptions);
   }
 
-  GetWorker() {
-
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json'})
-    };
-
-    //var data = "WorkerName=" + WorkerName + "&password=" + credentials.password + "&grant_type=password";
-    //var data = 
-    return this.http.get('http://localhost:50693/api/SilverERPWorker',httpOptions);;
-  }
 
 
 }
