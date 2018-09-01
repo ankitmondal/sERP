@@ -30,9 +30,8 @@ import { AdminServiceProvider } from '../providers/admin-service/admin-service';
 //API Call Related
 import { HttpModule } from '@angular/http';
 import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
-
 import { AuthInterceptor } from './auth/auth.interceptor'
-// import { AuthGuard } from './auth/auth.guard';
+import { UserServiceProvider } from '../providers/user-service/user-service';
 
 @NgModule({
   declarations: [
@@ -79,14 +78,13 @@ import { AuthInterceptor } from './auth/auth.interceptor'
     FilePath,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,
-    AdminServiceProvider
-    // ,
+    AdminServiceProvider,
     // {
     //   provide : HTTP_INTERCEPTORS,
     //   useClass : AuthInterceptor,
     //   multi : true
     // }
-    // AuthGuard
+    UserServiceProvider
   ]
 })
 export class AppModule {}

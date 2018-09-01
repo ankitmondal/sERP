@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { UserServiceProvider } from '../../providers/user-service/user-service';
 
 @Component({
   selector: 'page-addBuyerSale',
@@ -15,13 +16,22 @@ export class addBuyerSale {
   Fine: number = this.Quantity * this.Payment / 100;
   Advance: number = 0;
   MetalPaid: number;
-  Clients: Array<{ Name: string, Id: string }>;
+  Clients:any;// Array<{ Name: string, Id: string }>;
   Items: Array<{ Name: string, Id: string }>;
   submitted: boolean = false;
-  constructor(public navCtrl: NavController) {
-    this.Clients = [{ Name: "Ankit", Id: "AM" },
-    { Name: "Purnendu", Id: "PM" },
-    { Name: "Sukhendu", Id: "SM" }];
+  constructor(public navCtrl: NavController,public userService:UserServiceProvider) {
+
+    this.userService.GetMyClients()
+    .subscribe((myClients:any) => {
+      console.log(myClients);
+      this.Clients = myClients;
+    },
+      (error:any) => {
+        console.log(error);
+      });
+    // this.Clients = [{ Name: "Ankit", Id: "AM" },
+    // { Name: "Purnendu", Id: "PM" },
+    // { Name: "Sukhendu", Id: "SM" }];
 
     this.Items = [{ Name: "Dish", Id: "D" },
     { Name: "Plate", Id: "P" },

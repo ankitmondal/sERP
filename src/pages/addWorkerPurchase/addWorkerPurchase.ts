@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ModalController } from 'ionic-angular';
+import { UserServiceProvider } from '../../providers/user-service/user-service';
 
 @Component({
   selector: 'page-addWorkerPurchase',
@@ -15,17 +16,32 @@ export class addWorkerPurchase {
   Fine: number = this.Quantity * this.Payment / 100;
   Advance:number=0;
   MetalPaid:number;
-  Workers: Array<{ Name: string, Id: string }>;
-  Items: Array<{ Name: string, Id: string }>;
+  Workers: any;//Array<{ Name: string, Id: string }>;
+  Items: any;//Array<{ Name: string, Id: string }>;
   submitted: boolean = false;
-  constructor(public modalCtrl: ModalController) {
-    this.Workers = [{ Name: "Ankit", Id: "AM" },
-    { Name: "Purnendu", Id: "PM" },
-    { Name: "Sukhendu", Id: "SM" }];
-
-    this.Items = [{ Name: "Dish", Id: "D" },
-    { Name: "Plate", Id: "P" },
-    { Name: "Bowl", Id: "B" }]
+  constructor(public modalCtrl: ModalController,public userService:UserServiceProvider) {
+    this.userService.GetWorker()
+    .subscribe((myWorkers:any) => {
+      console.log(myWorkers);
+      this.Workers = myWorkers;
+    },
+      (error:any) => {
+        console.log(error);
+      });
+    // this.Workers = [{ Name: "Ankit", Id: "AM" },
+    // { Name: "Purnendu", Id: "PM" },
+    // { Name: "Sukhendu", Id: "SM" }];
+    this.userService.GetMyItems()
+    .subscribe((myItems:any) => {
+      console.log(myItems);
+      this.Items = myItems;
+    },
+      (error:any) => {
+        console.log(error);
+      });
+    // this.Items = [{ Name: "Dish", Id: "D" },
+    // { Name: "Plate", Id: "P" },
+    // { Name: "Bowl", Id: "B" }]
   }
   purchaseFromWorker() {
     console.log(this.WorkerName + this.ItemName + this.Quantity + this.Melt +

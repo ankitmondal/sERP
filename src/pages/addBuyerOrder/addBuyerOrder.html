@@ -12,7 +12,7 @@
       <ion-item>
         <ion-label fixed>Client Name</ion-label>
         <ion-select [(ngModel)]="ClientName">
-            <ion-option *ngFor="let worker of Workers" [value]="worker.Id">{{worker.Name}}</ion-option>
+            <ion-option *ngFor="let client of Clients" [value]="client.clientID">{{client.clientName}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item>
