@@ -11,30 +11,33 @@ export class addWorker {
   address: string;
   phoneNumber: number;
   icons: string[];
-  items: Array<{ title: string, note: string, icon: string }>;
+  Workers: Array<{ wId:string ,wName: string, wAddress: string, icon: string }>;
   constructor(public navCtrl: NavController, public alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController,public adminService:AdminServiceProvider) {
     this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
       'american-football', 'boat', 'bluetooth', 'build'];
 
-    this.items = [];
-    for (let i = 1; i < 11; i++) {
-      this.items.push({
-        title: 'Item ' + i,
-        note: 'This is item #' + i,
+    this.Workers = [];
+    for (let i = 1; i < 3; i++) {
+      this.Workers.push({
+        wId:'',
+        wName: 'Worker ' + i,
+        wAddress: 'Address  #' + i,
         icon: this.icons[Math.floor(Math.random() * this.icons.length)]
       });
     }
     
   }
   addWorker() {
-
     this.adminService.AddWorker(this.WorkerName , this.age , this.address , this.phoneNumber)
     .subscribe(addedWorker => {
       console.log(addedWorker);
     },
-      error => {
+      (error:any) => {
+        console.log(error.message);
+        this.showAlert("Error",error.message);
         console.log("Error");
-      });
+      }
+    );
 
     console.log(this.WorkerName + this.age + this.address + this.phoneNumber);
   }

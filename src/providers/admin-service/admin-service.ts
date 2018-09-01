@@ -11,13 +11,13 @@ export class AdminServiceProvider {
   }
 
   AddWorker(WorkerName: string, age: number, address: string, phoneNumber: number) {
-
+   var token=localStorage.getItem('userToken');
     const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/x-www-urlencoded'})
+      headers: new HttpHeaders({ 'Content-Type': 'application/json','Authorization': 'Bearer ' + token})
     };
-
-    //var data = "WorkerName=" + WorkerName + "&password=" + credentials.password + "&grant_type=password";
-    return this.http.post('http://localhost:50693/api/SilverERPWorker?WorkerName="Ankit"',httpOptions);
+    // var data = "WorkerName=" + WorkerName + "&Age=" + age + "&Address=" + address +"&PhoneNumber=" + phoneNumber;
+    var queryString= "api/SilverERPWorker?WorkerName=" + WorkerName +"&Age="+ age +"&Address="+ address +"&PhoneNumber="+phoneNumber;
+    return this.http.post('http://localhost:50693/'+ queryString,httpOptions);
   }
 
 
