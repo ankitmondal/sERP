@@ -26,13 +26,11 @@ export class LoginPage {
   }
 
   public login() {
-
     if (this.registerCredentials.email === null || this.registerCredentials.password === null) {
-      console.log('Please entercredentials');
+      this.showError('Please Enter Credentials');
     }
     else {
       this.showLoading();
-
       this.auth.login(this.registerCredentials).subscribe((data: any) => {
         console.log(data.access_token);
         localStorage.setItem('userToken', data.access_token);
@@ -43,16 +41,6 @@ export class LoginPage {
           console.log("Login Error");
         });
     }
-    // this.auth.login(this.registerCredentials).subscribe(allowed => {
-    //   if (allowed) {        
-    //     this.navCtrl.setRoot(HomePage);
-    //   } else {
-    //     this.showError("Access Denied");
-    //   }
-    // },
-    //   error => {
-    //     this.showError(error);
-    //   });
   }
 
   showLoading() {

@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
+//Pages
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
@@ -24,14 +25,15 @@ import { File } from '@ionic-native/file';
 import { Transfer } from '@ionic-native/transfer';
 import { FilePath } from '@ionic-native/file-path';
 import { Camera } from '@ionic-native/camera';
-import { AuthServiceProvider } from '../providers/auth-service/auth-service';
-import { AdminServiceProvider } from '../providers/admin-service/admin-service';
 
 //API Call Related
 import { HttpModule } from '@angular/http';
-import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from './auth/auth.interceptor'
+import { HttpClientModule } from '@angular/common/http';
+// import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
+// import { AuthInterceptor } from './auth/auth.interceptor'
 import { UserServiceProvider } from '../providers/user-service/user-service';
+import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+import { AdminServiceProvider } from '../providers/admin-service/admin-service';
 
 @NgModule({
   declarations: [
@@ -79,12 +81,14 @@ import { UserServiceProvider } from '../providers/user-service/user-service';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,
     AdminServiceProvider,
+    UserServiceProvider
+    // ,
     // {
     //   provide : HTTP_INTERCEPTORS,
     //   useClass : AuthInterceptor,
     //   multi : true
     // }
-    UserServiceProvider
+    
   ]
 })
 export class AppModule {}

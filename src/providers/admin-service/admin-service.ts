@@ -2,24 +2,27 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-// import { Woker } from '../../app/worker'
+import { sErpApiUrl } from '../service-baseUrl'
 @Injectable()
 export class AdminServiceProvider {
-  // baseUrl: baseApiUrl;
+  _apiUrl: string;
+
   constructor(public http: HttpClient) {
     console.log('Hello Admin Provider');
+    this._apiUrl = sErpApiUrl.url;
+    console.log(this._apiUrl);
   }
 
   AddWorker(WorkerName: string, age: number, address: string, phoneNumber: number) {
-   var token=localStorage.getItem('userToken');
+    var token = localStorage.getItem('userToken');
+    const header: HttpHeaders = new HttpHeaders();
+    const tokenData='Bearer ' + token;
+    header.set('Authorization', tokenData);
     const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json','Authorization': 'Bearer ' + token})
+      headers: header
     };
-    // var data = "WorkerName=" + WorkerName + "&Age=" + age + "&Address=" + address +"&PhoneNumber=" + phoneNumber;
-    var queryString= "api/SilverERPWorker?WorkerName=" + WorkerName +"&Age="+ age +"&Address="+ address +"&PhoneNumber="+phoneNumber;
-    return this.http.post('http://localhost:50693/'+ queryString,httpOptions);
+    console.log(tokenData);
+    var queryString = "AddWorker?WorkerName=" + WorkerName + "&Age=" + age + "&Address=" + address + "&PhoneNumber=" + phoneNumber;
+    return this.http.post('http://localhost:50693/' + queryString,"", httpOptions);
   }
-
-
-
 }
