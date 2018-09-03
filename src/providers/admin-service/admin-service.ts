@@ -2,14 +2,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import { sErpApiUrl } from '../service-baseUrl'
+import { config  } from '../service-config/service-config'
 @Injectable()
 export class AdminServiceProvider {
   _apiUrl: string;
 
   constructor(public http: HttpClient) {
     console.log('Hello Admin Provider');
-    this._apiUrl = sErpApiUrl.url;
+    this._apiUrl = config.url;
     console.log(this._apiUrl);
   }
 
@@ -23,6 +23,6 @@ export class AdminServiceProvider {
     };
     console.log(tokenData);
     var queryString = "AddWorker?WorkerName=" + WorkerName + "&Age=" + age + "&Address=" + address + "&PhoneNumber=" + phoneNumber;
-    return this.http.post('http://localhost:50693/' + queryString,"", httpOptions);
+    return this.http.post(this._apiUrl + queryString,"", httpOptions);
   }
 }
