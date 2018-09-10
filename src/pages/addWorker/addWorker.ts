@@ -1,18 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController, AlertController, ActionSheetController } from 'ionic-angular';
 import { AdminServiceProvider } from '../../providers/admin-service/admin-service';
+import { UserServiceProvider } from '../../providers/user-service/user-service';
 @Component({
   selector: 'page-addWorker',
   templateUrl: 'addWorker.html'
 })
-export class addWorker {
+export class addWorker implements OnInit {
   WorkerName: string;
   age: number;
   address: string;
   phoneNumber: number;
   icons: string[];
   Workers: Array<{ wId:string ,wName: string, wAddress: string, icon: string }>;
-  constructor(public navCtrl: NavController, public alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController,public adminService:AdminServiceProvider) {
+
+  constructor(public navCtrl: NavController, public alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController,
+    public adminService:AdminServiceProvider, public userService: UserServiceProvider ) {
     this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
       'american-football', 'boat', 'bluetooth', 'build'];
 
@@ -27,10 +30,17 @@ export class addWorker {
     }
     
   }
+
+  ngOnInit(){
+    this.getWorker();
+  }
+
   addWorker() {
     this.adminService.AddWorker(this.WorkerName , this.age , this.address , this.phoneNumber)
     .subscribe(addedWorker => {
+      this.showAlert("Success","Worker has been added successfully");
       console.log(addedWorker);
+      this.reset();
     },
       (error:any) => {
         console.log(error.message);
@@ -40,6 +50,16 @@ export class addWorker {
     );
 
     console.log(this.WorkerName + this.age + this.address + this.phoneNumber);
+  }
+
+  getWorker(){
+    // this.userService.GetWorker()
+    //     .subscribe((data:any)=>{
+
+    //     },
+    //     (error:any) =>{
+
+    //   });
   }
   showUpdateDeleteActionSheet() {
     const actionSheet = this.actionSheetCtrl.create({
@@ -69,6 +89,7 @@ export class addWorker {
     });
     actionSheet.present();
   }
+
   showAlert(title, message) {
     const alert = this.alertCtrl.create({
       title: title,
@@ -79,13 +100,16 @@ export class addWorker {
   }
 
   itemTapped(event, item) {
-    // That's right, we're pushing to ourselves!
-    // this.navCtrl.push(addItem, {
-    //   item: item
-    // });
     console.log(event);
     console.log(item);
     this.showUpdateDeleteActionSheet();
+  }
+
+  reset(){
+    this.WorkerName = "";
+    this.age = 0;
+    this.address = "";
+    this.phoneNumber = 0;
   }
 }
 

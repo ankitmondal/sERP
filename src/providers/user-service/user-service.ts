@@ -1,7 +1,8 @@
-import { HttpClient,HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import { config } from '../service-config/service-config'
 /*
   Generated class for the UserServiceProvider provider.
 
@@ -10,40 +11,25 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class UserServiceProvider {
+  _apiUrl: string;
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
   constructor(public http: HttpClient) {
     console.log('Hello UserServiceProvider Provider');
+    this._apiUrl = config.url;
   }
-
   //Get Worker by user id
   GetWorker() {
-
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json'})
-    };
-
-    //var data = "WorkerName=" + WorkerName + "&password=" + credentials.password + "&grant_type=password";
-    //var data = 
-    return this.http.get('http://localhost:50693/api/SilverERPWorker',httpOptions);
+    return this.http.get( this._apiUrl + 'api/SilverERPWorker', this.httpOptions);
   }
-//Get Items by user id
+  //Get Items by user id
   GetMyItems() {
-
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json'})
-    };
-    //var data = "WorkerName=" + WorkerName + "&password=" + credentials.password + "&grant_type=password";
-    //var data = 
-    return this.http.get('http://localhost:50693/api/SilverERPItem',httpOptions);
+    return this.http.get( this._apiUrl + 'api/SilverERPItem', this.httpOptions);
   }
-//Get Clients by user id
+  //Get Clients by user id
   GetMyClients() {
-
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json'})
-    };
-    //var data = "WorkerName=" + WorkerName + "&password=" + credentials.password + "&grant_type=password";
-    //var data = 
-    return this.http.get('http://localhost:50693/api/SilverERPClient',httpOptions);
+    return this.http.get( this._apiUrl + 'api/SilverERPClient', this.httpOptions);
   }
 }

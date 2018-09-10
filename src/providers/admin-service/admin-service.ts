@@ -10,19 +10,15 @@ export class AdminServiceProvider {
   constructor(public http: HttpClient) {
     console.log('Hello Admin Provider');
     this._apiUrl = config.url;
-    console.log(this._apiUrl);
   }
 
   AddWorker(WorkerName: string, age: number, address: string, phoneNumber: number) {
     var token = localStorage.getItem('userToken');
-    const header: HttpHeaders = new HttpHeaders();
-    const tokenData='Bearer ' + token;
-    header.set('Authorization', tokenData);
-    const httpOptions = {
-      headers: header
-    };
-    console.log(tokenData);
     var queryString = "AddWorker?WorkerName=" + WorkerName + "&Age=" + age + "&Address=" + address + "&PhoneNumber=" + phoneNumber;
-    return this.http.post(this._apiUrl + queryString,"", httpOptions);
+    const header = new HttpHeaders({'Authorization':'Bearer ' + token}); 
+    let options = {
+        headers: header
+    };        
+    return this.http.post(this._apiUrl + queryString , "" , { headers : header });
   }
 }

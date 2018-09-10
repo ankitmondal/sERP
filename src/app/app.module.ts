@@ -27,7 +27,6 @@ import { FilePath } from '@ionic-native/file-path';
 import { Camera } from '@ionic-native/camera';
 
 //API Call Related
-import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 // import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 // import { AuthInterceptor } from './auth/auth.interceptor'
@@ -52,9 +51,8 @@ import { AdminServiceProvider } from '../providers/admin-service/admin-service';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
-    HttpModule,
-    HttpClientModule
+    HttpClientModule,
+    IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
