@@ -12,8 +12,11 @@ import { config } from '../service-config/service-config'
 @Injectable()
 export class UserServiceProvider {
   _apiUrl: string;
+  token:string = localStorage.getItem('userToken');
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json',
+                               'Authorization':'Bearer ' + this.token  
+                            })
   };
 
   constructor(public http: HttpClient) {
