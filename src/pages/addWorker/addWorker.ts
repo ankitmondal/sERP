@@ -12,7 +12,7 @@ export class addWorker implements OnInit {
   address: string;
   phoneNumber: number;
   icons: string[];
-  Workers: Array<{ wId:string ,wName: string, wAddress: string, icon: string }>;
+  Workers: any;//Array<{ wId:string ,wName: string, wAddress: string, icon: string }>;
 
   constructor(public navCtrl: NavController, public alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController,
     public adminService:AdminServiceProvider, public userService: UserServiceProvider ) {
@@ -20,14 +20,14 @@ export class addWorker implements OnInit {
       'american-football', 'boat', 'bluetooth', 'build'];
 
     this.Workers = [];
-    for (let i = 1; i < 3; i++) {
-      this.Workers.push({
-        wId:'',
-        wName: 'Worker ' + i,
-        wAddress: 'Address  #' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-      });
-    }
+    // for (let i = 1; i < 3; i++) {
+    //   this.Workers.push({
+    //     wId:'',
+    //     wName: 'Worker ' + i,
+    //     wAddress: 'Address  #' + i,
+    //     icon: this.icons[Math.floor(Math.random() * this.icons.length)]
+    //   });
+    // }
     
   }
 
@@ -53,13 +53,16 @@ export class addWorker implements OnInit {
   }
 
   getWorker(){
-    // this.userService.GetWorker()
-    //     .subscribe((data:any)=>{
-
-    //     },
-    //     (error:any) =>{
-
-    //   });
+    this.userService.GetWorker()
+        .subscribe((data:any)=>{
+          this.Workers=data;
+          console.log(this.Workers);
+        },
+        (error:any) =>{
+          console.log(error.message);
+          this.showAlert("Error",error.message);
+          console.log("Error");
+      });
   }
   showUpdateDeleteActionSheet() {
     const actionSheet = this.actionSheetCtrl.create({

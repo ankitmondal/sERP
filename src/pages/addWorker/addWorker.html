@@ -36,14 +36,14 @@
       <br/>
   <ion-card>
     <ion-card-header>
-      Added Items
+      Added Workers
     </ion-card-header>
     <ion-list>
-      <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-        <ion-icon [name]="item.icon" item-start></ion-icon>
-        {{item.wName}}
+      <button ion-item *ngFor="let worker of Workers" (click)="itemTapped($event, worker)">
+        <ion-icon [name]="worker.icon" item-start></ion-icon>
+        {{worker.workerName}}
         <div class="item-note" item-end>
-          {{item.wAddress}}
+          {{worker.wAddress}}
         </div>
       </button>
     </ion-list>

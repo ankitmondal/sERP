@@ -22,8 +22,8 @@ export class AuthServiceProvider {
   }
 
   public login(credentials) {
-    credentials.email="ankitmondalece@gmail.com";
-    credentials.password="Abcdef#2";
+    credentials.email="testing@test.com";
+    credentials.password="Abcd*1234";
 
     var data = "username=" + credentials.email + "&password=" + credentials.password + "&grant_type=password";
     // const httpOptions = {

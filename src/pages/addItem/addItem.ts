@@ -5,6 +5,9 @@ import { File } from '@ionic-native/file';
 import { Transfer, TransferObject } from '@ionic-native/transfer';
 import { FilePath } from '@ionic-native/file-path';
 import { Camera } from '@ionic-native/camera';
+import { itemModel  } from '../../models/item.model';
+import { AdminServiceProvider } from '../../providers/admin-service/admin-service';
+import { UserServiceProvider } from '../../providers/user-service/user-service';
 
 declare var cordova: any;
 
@@ -21,28 +24,59 @@ export class addItem {
 
   selectedItem: any;
   icons: string[];
-  items: Array<{title: string, note: string, icon: string}>;
+  items: itemModel[];//Array<{title: string, note: string, icon: string}>;
 
   constructor(public navCtrl: NavController, private camera: Camera, private transfer: Transfer, private file: File, 
               private filePath: FilePath, public actionSheetCtrl: ActionSheetController, public toastCtrl: ToastController, 
+              public adminService:AdminServiceProvider,  public userService: UserServiceProvider,
               public platform: Platform, public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
 
       this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
       'american-football', 'boat', 'bluetooth', 'build'];
   
       this.items = [];
-      for (let i = 1; i < 11; i++) {
-        this.items.push({
-          title: 'Item ' + i,
-          note: 'This is item #' + i,
-          icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-        });
-      }
+      // for (let i = 1; i < 11; i++) {
+      //   this.items.push({
+      //     title: 'Item ' + i,
+      //     note: 'This is item #' + i,
+      //     icon: this.icons[Math.floor(Math.random() * this.icons.length)]
+      //   });
+      // }
 
   }
 
+  ngOnInit(){
+    this.getItem();
+  }
   addItem() {
+    let item:itemModel = new itemModel(this.ItemName,this.Category);
+    this.adminService.AddItem(item)
+    .subscribe(addedItem => {
+      this.showAlert("Success","Item has been added successfully");
+      console.log(addedItem);
+      this.reset();
+    },
+      (error:any) => {
+        console.log(error.message);
+        this.showAlert("Error",error.message);
+        console.log("Error");
+      }
+    );
+
     console.log(this.ItemName + this.Category);
+  }
+
+  getItem(){
+    this.userService.GetMyItems()
+        .subscribe((data:any)=>{
+          this.items=data;
+          console.log(this.items);
+        },
+        (error:any) =>{
+          console.log(error.message);
+          this.showAlert("Error",error.message);
+          console.log("Error");
+      });
   }
 
   showUpdateDeleteActionSheet() {
@@ -212,6 +246,10 @@ export class addItem {
       this.loading.dismissAll()
       this.presentToast('Error while uploading file.');
     });
+  }
+  reset(){
+    this.ItemName = "";
+    this.Category = "";   
   }
 
 
