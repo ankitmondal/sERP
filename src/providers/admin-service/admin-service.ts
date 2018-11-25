@@ -1,3 +1,4 @@
+import { workerorderModel } from './../../models/workerorder.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
@@ -33,6 +34,18 @@ export class AdminServiceProvider {
     };        
     return this.http.post(this._apiUrl + queryString , item, options);
   }
+  DeleteItem(itemID: number) {
+    var token = localStorage.getItem('userToken');
+    var queryString = "api/SilverERPItem?id="+itemID;
+    console.log(queryString);
+    const header = new HttpHeaders({'Authorization':'Bearer ' + token}); 
+    let options = {
+        headers: header ,
+        //params:{id : itemID}     
+    };        
+    return this.http.delete(this._apiUrl + queryString,options);
+  }
+
 
   AddClient(client: clientModel) {
     var token = localStorage.getItem('userToken');
@@ -42,5 +55,15 @@ export class AdminServiceProvider {
         headers: header
     };        
     return this.http.post(this._apiUrl + queryString , client, options);
+  }
+
+  AddWorkerOrder(wOrder: workerorderModel) {
+    var token = localStorage.getItem('userToken');
+    var routeString = "api/SilverERPOrder";
+    const header = new HttpHeaders({'Authorization':'Bearer ' + token}); 
+    let options = {
+        headers: header
+    };        
+    return this.http.post(this._apiUrl + routeString , wOrder, options);
   }
 }

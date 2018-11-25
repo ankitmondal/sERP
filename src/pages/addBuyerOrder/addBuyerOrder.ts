@@ -12,11 +12,11 @@ export class addBuyerOrder {
   Melt:number;
   ExpectedDate:Date;
   AdvanceAmount:number;
-  Workers: Array<{Name: string, Id: string}>;
+  Clients: Array<{Name: string, Id: string}>;
   Items:Array<{Name:string,Id:string}>;
 
   constructor(public navCtrl: NavController) {
-      this.Workers=[{Name:"Ankit",Id:"AM"},
+      this.Clients=[{Name:"Ankit",Id:"AM"},
                     {Name:"Purnendu",Id:"PM"},
                     {Name:"Sukhendu",Id:"SM"}];
 

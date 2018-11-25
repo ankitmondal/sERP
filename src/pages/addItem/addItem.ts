@@ -79,7 +79,7 @@ export class addItem {
       });
   }
 
-  showUpdateDeleteActionSheet() {
+  showUpdateDeleteActionSheet(item:any) {
     const actionSheet = this.actionSheetCtrl.create({
       title: 'Modify your added Item',
       buttons: [
@@ -87,14 +87,16 @@ export class addItem {
           text: 'Edit',
           role: 'Edit',
           handler: () => {
-            console.log('Destructive clicked');
+            console.log('Update clicked');
             this.showAlert("Item Edited","Your Item has been updated");
           }
         },{
           text: 'Delete',
           handler: () => {
-            console.log('Archive clicked');
+            console.log('Remove clicked '+ item.itemID );
+            this.adminService.DeleteItem(item.itemID).subscribe((res: any) => console.log("user deleted"));;
             this.showAlert("Item Deleted","Your Item has been removed from list");
+            this.getItem();
           }
         },{
           text: 'Cancel',
@@ -123,7 +125,7 @@ export class addItem {
     // });
     console.log(event);
     console.log(item);
-    this.showUpdateDeleteActionSheet();
+    this.showUpdateDeleteActionSheet(item);
   }
   public presentActionSheet() {
     let actionSheet = this.actionSheetCtrl.create({
