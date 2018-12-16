@@ -1,3 +1,5 @@
+import { workerModel } from './../../models/worker.model';
+import { Woker } from './../../app/worker';
 import { Component, OnInit } from '@angular/core';
 import { NavController, AlertController, ActionSheetController } from 'ionic-angular';
 import { AdminServiceProvider } from '../../providers/admin-service/admin-service';
@@ -10,7 +12,8 @@ export class addWorker implements OnInit {
   WorkerName: string;
   age: number;
   address: string;
-  phoneNumber: number;
+  phoneNumber: string;
+  kID: number;
   icons: string[];
   Workers: any;//Array<{ wId:string ,wName: string, wAddress: string, icon: string }>;
 
@@ -36,6 +39,9 @@ export class addWorker implements OnInit {
   }
 
   addWorker() {
+    let worker:workerModel = new workerModel(this.WorkerName,this.address,this.phoneNumber,this.age,this.kID);
+
+    if(worker.kID === null){
     this.adminService.AddWorker(this.WorkerName , this.age , this.address , this.phoneNumber)
     .subscribe(addedWorker => {
       this.showAlert("Success","Worker has been added successfully");
@@ -48,6 +54,21 @@ export class addWorker implements OnInit {
         console.log("Error");
       }
     );
+  }
+    else{
+      this.adminService.UpdateWorker(this.kID,worker)
+      .subscribe(UpdatedWorker => {
+        this.showAlert("Success","Worker has been Updated successfully");
+        console.log(UpdatedWorker);
+        this.reset();
+      },
+        (error:any) => {
+          console.log(error.message);
+          this.showAlert("Error",error.message);
+          console.log("Error in Update");
+        }
+      );
+    }
 
     console.log(this.WorkerName + this.age + this.address + this.phoneNumber);
   }
@@ -64,7 +85,7 @@ export class addWorker implements OnInit {
           console.log("Error");
       });
   }
-  showUpdateDeleteActionSheet() {
+  showUpdateDeleteActionSheet(worker:any) {
     const actionSheet = this.actionSheetCtrl.create({
       title: 'Modify your added Item',
       buttons: [
@@ -72,14 +93,21 @@ export class addWorker implements OnInit {
           text: 'Edit',
           role: 'Edit',
           handler: () => {
-            console.log('Destructive clicked');
-            this.showAlert("Item Edited", "Your Item has been updated");
+            console.log('Update clicked for' +worker.workerName );
+            this.WorkerName= worker.workerName;
+  this.age=worker.wAge;
+  this.address=worker.wAddress ;
+  this.phoneNumber=worker.wPhone ;
+  this.kID=worker.kID ;
+            this.showAlert("Worker Edit", "Your Worker details has been loaded");
           }
         }, {
           text: 'Delete',
           handler: () => {
-            console.log('Archive clicked');
-            this.showAlert("Item Deleted", "Your Item has been removed from list");
+            console.log('Remove clicked for '+worker.kID);
+            this.adminService.DeleteWorker(worker.kID).subscribe((res: any) => console.log("worker deleted"));;
+            this.showAlert("Worker Deleted", "Your Worker has been removed from list");
+            this.getWorker();
           }
         }, {
           text: 'Cancel',
@@ -105,14 +133,15 @@ export class addWorker implements OnInit {
   itemTapped(event, item) {
     console.log(event);
     console.log(item);
-    this.showUpdateDeleteActionSheet();
+    this.showUpdateDeleteActionSheet(item);
   }
 
   reset(){
     this.WorkerName = "";
     this.age = 0;
     this.address = "";
-    this.phoneNumber = 0;
+    this.phoneNumber = "";
+    this.kID=null;
   }
 }
 

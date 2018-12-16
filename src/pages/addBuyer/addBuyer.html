@@ -31,14 +31,14 @@
   <br/>
   <ion-card>
     <ion-card-header>
-      Added Items
+      Added Clients
     </ion-card-header>
     <ion-list>
-      <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-        <ion-icon [name]="item.icon" item-start></ion-icon>
-        {{item.title}}
+      <button ion-item *ngFor="let client of clients" (click)="itemTapped($event, client)">
+        <ion-icon [name]="client.icon" item-start></ion-icon>
+        {{client.clientName}}
         <div class="item-note" item-end>
-          {{item.note}}
+          {{client.cPhone}}
         </div>
       </button>
     </ion-list>

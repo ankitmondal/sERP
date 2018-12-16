@@ -18,6 +18,7 @@ declare var cordova: any;
 export class addItem {
   ItemName: string;
   Category: string;
+  itemID: number; 
 
   lastImage: string = null;
   loading: Loading;
@@ -49,7 +50,8 @@ export class addItem {
     this.getItem();
   }
   addItem() {
-    let item:itemModel = new itemModel(this.ItemName,this.Category);
+    let item:itemModel = new itemModel(this.ItemName,this.Category,this.itemID);
+    if(item.itemID === null){
     this.adminService.AddItem(item)
     .subscribe(addedItem => {
       this.showAlert("Success","Item has been added successfully");
@@ -62,6 +64,21 @@ export class addItem {
         console.log("Error");
       }
     );
+  }
+  else{
+    this.adminService.UpdateItem(this.itemID,item)
+    .subscribe(UpdatedItem => {
+      this.showAlert("Success","Item has been Updated successfully");
+      console.log(UpdatedItem);
+      this.reset();
+    },
+      (error:any) => {
+        console.log(error.message);
+        this.showAlert("Error",error.message);
+        console.log("Error in Update");
+      }
+    );
+  }  
 
     console.log(this.ItemName + this.Category);
   }
@@ -87,13 +104,16 @@ export class addItem {
           text: 'Edit',
           role: 'Edit',
           handler: () => {
-            console.log('Update clicked');
-            this.showAlert("Item Edited","Your Item has been updated");
+            console.log('Update clicked for' +item.ItemName);
+            this.ItemName = item.itemName;
+            this.Category = item.itemCategory;    
+            this.itemID = item.itemID;        
+            this.showAlert("Item Edit","Your Item has been loaded");
           }
         },{
           text: 'Delete',
           handler: () => {
-            console.log('Remove clicked '+ item.itemID );
+            console.log('Remove clicked for '+ item.itemID );
             this.adminService.DeleteItem(item.itemID).subscribe((res: any) => console.log("user deleted"));;
             this.showAlert("Item Deleted","Your Item has been removed from list");
             this.getItem();
@@ -252,6 +272,7 @@ export class addItem {
   reset(){
     this.ItemName = "";
     this.Category = "";   
+    this.itemID = null;
   }
 
 

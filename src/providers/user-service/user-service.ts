@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { config } from '../service-config/service-config'
+import { workerorderModel } from './../../models/workerorder.model';
 /*
   Generated class for the UserServiceProvider provider.
 
@@ -34,5 +35,15 @@ export class UserServiceProvider {
   //Get Clients by user id
   GetMyClients() {
     return this.http.get( this._apiUrl + 'api/SilverERPClient', this.httpOptions);
+  }
+
+  AddWorkerOrder(wOrder: workerorderModel) {
+    var token = localStorage.getItem('userToken');
+    var routeString = "api/SilverERPOrder";
+    const header = new HttpHeaders({'Authorization':'Bearer ' + token}); 
+    let options = {
+        headers: header
+    };        
+    return this.http.post(this._apiUrl + routeString , wOrder, options);
   }
 }

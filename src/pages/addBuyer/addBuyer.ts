@@ -12,6 +12,7 @@ export class addBuyer {
   address1: string;
   address2: string;
   phoneNumber: number;
+  clientID: number;
 
   icons: string[];
   clients: clientModel[];//Array<{ title: string, note: string, icon: string }>;
@@ -36,7 +37,7 @@ export class addBuyer {
     this.getClient();
   }
   getClient(){
-    this.userService.GetWorker()
+    this.userService.GetMyClients()
         .subscribe((data:any)=>{
           this.clients=data;
           console.log(this.clients);
@@ -49,10 +50,11 @@ export class addBuyer {
   }
 
   addBuyer() {
-    let client:clientModel = new clientModel(this.ClientName,this.address1,this.address2,this.phoneNumber)
+    let client:clientModel = new clientModel(this.ClientName,this.address1,this.address2,this.phoneNumber,this.clientID)
+    if(client.clientID === null){
     this.adminService.AddClient(client)
     .subscribe(addedItem => {
-      this.showAlert("Success","Item has been added successfully");
+      this.showAlert("Success","Buyer has been added successfully");
       console.log(addedItem);
       this.reset();
     },
@@ -62,9 +64,24 @@ export class addBuyer {
         console.log("Error");
       }
     );
+  }
+  else{
+    this.adminService.UpdateClient(this.clientID,client)
+    .subscribe(UpdatedItem => {
+      this.showAlert("Success","Buyer has been Updated successfully");
+      console.log(UpdatedItem);
+      this.reset();
+    },
+      (error:any) => {
+        console.log(error.message);
+        this.showAlert("Error",error.message);
+        console.log("Error in Update");
+      }
+    );
+  }
     console.log(this.ClientName + this.address1 + this.address2 + this.phoneNumber);
   }
-  showUpdateDeleteActionSheet() {
+  showUpdateDeleteActionSheet(client:any) {
     const actionSheet = this.actionSheetCtrl.create({
       title: 'Modify your added Item',
       buttons: [
@@ -72,14 +89,22 @@ export class addBuyer {
           text: 'Edit',
           role: 'Edit',
           handler: () => {
-            console.log('Destructive clicked');
-            this.showAlert("Item Edited", "Your Item has been updated");
+            console.log('Update clicked for ' + client.ClientName);
+            this.ClientName =client.clientName;
+             this.address1 = client.cAddress1;
+              this.address2 = client.cAddress2;
+               this.phoneNumber = client.cPhone;
+               this.phoneNumber = client.cPhone;
+               this.clientID = client.clientID;  
+            this.showAlert("Buyer Edit","Your Client has been loaded");
           }
         }, {
           text: 'Delete',
           handler: () => {
-            console.log('Archive clicked');
-            this.showAlert("Item Deleted", "Your Item has been removed from list");
+            console.log('Remove clicked for '+client.clientID);
+            this.adminService.DeleteItem(client.clientID).subscribe((res: any) => console.log("user deleted"));;
+            this.showAlert("Buyer Deleted", "Your Client has been removed from list");
+            this.getClient();
           }
         }, {
           text: 'Cancel',
@@ -108,13 +133,14 @@ export class addBuyer {
     // });
     console.log(event);
     console.log(item);
-    this.showUpdateDeleteActionSheet();
+    this.showUpdateDeleteActionSheet(item);
   }
-
+ 
   reset(){
     this.ClientName = "";
     this.address1 = "";
     this.address2 = "";
     this.phoneNumber = 0;
+    this.clientID=null;
   }
 }

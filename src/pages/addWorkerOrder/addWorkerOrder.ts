@@ -49,9 +49,9 @@ export class addWorkerOrder {
   }
   addWorkerOrder() {
     let wOrder:workerorderModel = new workerorderModel(0,this.WorkerID,this.ItemID,this.Quantity,this.Melt,this.AdvanceAmount,0,this.ExpectedDate,null,null,"",0)
-    this.adminService.AddWorkerOrder(wOrder)
+    this.userService.AddWorkerOrder(wOrder)
     .subscribe(addedItem => {
-      this.showAlert("Success","Item has been added successfully");
+      this.showAlert("Success","Order has been added successfully");
       console.log(addedItem);
       this.reset();
     },
