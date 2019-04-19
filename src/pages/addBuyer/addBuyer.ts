@@ -51,12 +51,13 @@ export class addBuyer {
 
   addBuyer() {
     let client:clientModel = new clientModel(this.ClientName,this.address1,this.address2,this.phoneNumber,this.clientID)
-    if(client.clientID === null){
+    if(client.clientID === undefined){
     this.adminService.AddClient(client)
     .subscribe(addedItem => {
       this.showAlert("Success","Buyer has been added successfully");
       console.log(addedItem);
       this.reset();
+      this.getClient();
     },
       (error:any) => {
         console.log(error.message);
@@ -71,6 +72,7 @@ export class addBuyer {
       this.showAlert("Success","Buyer has been Updated successfully");
       console.log(UpdatedItem);
       this.reset();
+      this.getClient();
     },
       (error:any) => {
         console.log(error.message);
@@ -79,6 +81,7 @@ export class addBuyer {
       }
     );
   }
+  
     console.log(this.ClientName + this.address1 + this.address2 + this.phoneNumber);
   }
   showUpdateDeleteActionSheet(client:any) {
@@ -141,6 +144,6 @@ export class addBuyer {
     this.address1 = "";
     this.address2 = "";
     this.phoneNumber = 0;
-    this.clientID=null;
+    this.clientID=undefined;
   }
 }

@@ -74,9 +74,11 @@ export class addWorkerOrder {
     alert.present();
   }
   reset(){
-    this.WorkerID =0;
+    this.WorkerID =null;
     this.Quantity = 0;
-    this.ItemID =0;
+    this.ItemID= null;
     this.Melt = 0;
+    this.ExpectedDate =null;
+     this.AdvanceAmount=0;
   }
 }

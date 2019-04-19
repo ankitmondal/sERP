@@ -51,12 +51,14 @@ export class addItem {
   }
   addItem() {
     let item:itemModel = new itemModel(this.ItemName,this.Category,this.itemID);
-    if(item.itemID === null){
+    //alert(item.itemID);
+    if(item.itemID === undefined){
     this.adminService.AddItem(item)
     .subscribe(addedItem => {
       this.showAlert("Success","Item has been added successfully");
       console.log(addedItem);
       this.reset();
+      this.getItem();
     },
       (error:any) => {
         console.log(error.message);
@@ -71,6 +73,7 @@ export class addItem {
       this.showAlert("Success","Item has been Updated successfully");
       console.log(UpdatedItem);
       this.reset();
+      this.getItem();
     },
       (error:any) => {
         console.log(error.message);
@@ -79,7 +82,7 @@ export class addItem {
       }
     );
   }  
-
+  
     console.log(this.ItemName + this.Category);
   }
 
@@ -272,7 +275,7 @@ export class addItem {
   reset(){
     this.ItemName = "";
     this.Category = "";   
-    this.itemID = null;
+    this.itemID = undefined;
   }
 
 

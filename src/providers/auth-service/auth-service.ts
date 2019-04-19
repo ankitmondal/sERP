@@ -16,6 +16,7 @@ export class User {
 export class AuthServiceProvider {
   currentUser: User;
   rootUrl: 'http://localhost:50693/';
+  //rootUrl: 'http://api.proxyraja.com/';
 
   constructor(public http: HttpClient) {
     console.log('Hello AuthServiceProvider Provider');
@@ -35,7 +36,8 @@ export class AuthServiceProvider {
     const httpOptions = {
       headers: header
     };
-    return this.http.post('http://localhost:50693/Token', data, httpOptions);
+    return this.http.post('http://localhost:50693/Token', data, httpOptions); 
+    //return this.http.post('http://api.proxyraja.com/Token', data, httpOptions);
   }
 
 

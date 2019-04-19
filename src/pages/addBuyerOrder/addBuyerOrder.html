@@ -11,14 +11,14 @@
     <ion-item-group>
       <ion-item>
         <ion-label fixed>Client Name</ion-label>
-        <ion-select [(ngModel)]="ClientName">
-            <ion-option *ngFor="let client of Clients" [value]="client.Id">{{client.Name}}</ion-option>
+        <ion-select [(ngModel)]="ClientId">
+            <ion-option *ngFor="let client of Clients" [value]="client.clientID">{{client.clientName}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label fixed>Item</ion-label>
-        <ion-select [(ngModel)]="ItemName">
-            <ion-option *ngFor="let item of Items" [value]="item.Id">{{item.Name}}</ion-option>
+        <ion-select [(ngModel)]="ItemId">
+            <ion-option *ngFor="let item of Items" [value]="item.itemID">{{item.itemName}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item>
@@ -38,5 +38,5 @@
         <ion-input type="number" [(ngModel)]="AdvanceAmount"></ion-input>
       </ion-item> -->
     </ion-item-group>
-    <button ion-button block (click)='addWorkerOrder();'>Save</button>
+    <button ion-button block (click)='addBuyerOrder();'>Save</button>
   </ion-content>
