@@ -12,13 +12,13 @@
     <ion-item-group>
       <ion-item>
         <ion-label fixed>Worker Name</ion-label>
-        <ion-select [(ngModel)]="WorkerName">
-          <ion-option *ngFor="let worker of Workers" [value]="worker.kId">{{worker.workerName}}</ion-option>
+        <ion-select [(ngModel)]="WorkerID">
+          <ion-option *ngFor="let worker of Workers" [value]="worker.kID">{{worker.workerName}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label fixed>Item</ion-label>
-        <ion-select [(ngModel)]="ItemName">
+        <ion-select [(ngModel)]="ItemID">
           <ion-option *ngFor="let item of Items" [value]="item.itemID">{{item.itemName}}</ion-option>
         </ion-select>
       </ion-item>
@@ -51,7 +51,7 @@
         <ion-icon name="calculator"></ion-icon>Calculate
       </button>
       <button ion-button icon-left (click)="presentModal();" [disabled]="Fine === null || Fine === 0">
-        <ion-icon name="cloud-upload"></ion-icon>Save
+        <ion-icon name="cloud-upload"></ion-icon>Submit
       </button>
     </ion-buttons>
   </div>

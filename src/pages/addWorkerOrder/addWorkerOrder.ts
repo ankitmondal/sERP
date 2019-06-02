@@ -1,4 +1,4 @@
-import { workerorderModel } from './../../models/workerorder.model';
+import { orderModel } from '../../models/order.model';
 import { Component } from '@angular/core';
 import { NavController,AlertController } from 'ionic-angular';
 import { AdminServiceProvider } from '../../providers/admin-service/admin-service';
@@ -48,11 +48,12 @@ export class addWorkerOrder {
       //             {Name:"Bowl",Id:"B"}]
   }
   addWorkerOrder() {
-    let wOrder:workerorderModel = new workerorderModel(0,this.WorkerID,this.ItemID,this.Quantity,this.Melt,this.AdvanceAmount,0,this.ExpectedDate,null,null,"",0)
-    this.userService.AddWorkerOrder(wOrder)
-    .subscribe(addedItem => {
+    let wOrder:orderModel = new orderModel(0,this.WorkerID,this.ItemID,this.Quantity,this.Melt,this.AdvanceAmount,0,this.ExpectedDate,null,null,"",0,1)
+    console.log(wOrder);
+    this.userService.AddOrder(wOrder)
+    .subscribe(addedOrder => {
       this.showAlert("Success","Order has been added successfully");
-      console.log(addedItem);
+      console.log(addedOrder);
       this.reset();
     },
       (error:any) => {

@@ -1,5 +1,7 @@
+import { AdminServiceProvider } from './../../providers/admin-service/admin-service';
 import { Component } from '@angular/core';
-import { ModalController } from 'ionic-angular';
+import { orderModel } from '../../models/order.model';
+import { ModalController,NavController,AlertController, DateTime } from 'ionic-angular';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
 
 @Component({
@@ -7,11 +9,11 @@ import { UserServiceProvider } from '../../providers/user-service/user-service';
   templateUrl: 'addWorkerPurchase.html'
 })
 export class addWorkerPurchase {
-  WorkerName: string;
-  ItemName: string;
+  WorkerID: number;
+  ItemID:number;
   Quantity: number = 0;
-  Melt: number = 58;
-  Wastage: number = 5;
+  Melt: number ;
+  Wastage: number ;
   Payment: number = this.Melt + this.Wastage;
   Fine: number = this.Quantity * this.Payment / 100;
   Advance:number=0;
@@ -19,7 +21,9 @@ export class addWorkerPurchase {
   Workers: any;//Array<{ Name: string, Id: string }>;
   Items: any;//Array<{ Name: string, Id: string }>;
   submitted: boolean = false;
-  constructor(public modalCtrl: ModalController,public userService:UserServiceProvider) {
+  constructor(public modalCtrl: ModalController,public userService:UserServiceProvider,
+    public navCtrl: NavController, public alertCtrl: AlertController) 
+  {
     this.userService.GetWorker()
     .subscribe((myWorkers:any) => {
       console.log(myWorkers);
@@ -44,10 +48,34 @@ export class addWorkerPurchase {
     // { Name: "Bowl", Id: "B" }]
   }
   purchaseFromWorker() {
-    console.log(this.WorkerName + this.ItemName + this.Quantity + this.Melt +
-      this.Wastage + this.Payment);
-    this.submitted = false;
+    let wOrder:orderModel = new orderModel(0,this.WorkerID,this.ItemID,this.Fine,this.Melt,this.Advance,0,null,null,null,"",0,3)
+    console.log(this.WorkerID);
+
+    this.userService.AddOrder(wOrder)
+    .subscribe(addedOrder => {
+      this.showAlert("Success","Order has been added successfully");
+      console.log(addedOrder);
+      // this.reset();
+    },
+      (error:any) => {
+        console.log(error.message);
+        this.showAlert("Error",error.message);
+        console.log("Error");
+      }
+    );
+    // console.log(this.WorkerName + this.ItemName + this.Quantity + this.Melt +
+    //   this.Wastage + this.Payment);
+    // this.submitted = false;
   }
+  showAlert(title, message) {
+    const alert = this.alertCtrl.create({
+      title: title,
+      subTitle: message,
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
   calculate() {
     this.Fine = this.Quantity * (this.Melt * 1 + this.Wastage * 1 ) / 100;
   }

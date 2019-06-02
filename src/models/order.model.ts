@@ -1,4 +1,4 @@
-export class workerorderModel {
+export class orderModel {
  
     constructor(       
         public orderID?: number,
@@ -12,5 +12,6 @@ export class workerorderModel {
         public createDate?: Date,
         public closingDate?: Date,
         public description?: string,
-    public oStatus?: number){}
+    public oStatus?: number,
+    public oType?: number){}
 }

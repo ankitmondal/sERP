@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { orderModel } from '../../models/order.model';
 import { NavController,AlertController } from 'ionic-angular';
 import { AdminServiceProvider } from '../../providers/admin-service/admin-service';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
@@ -8,8 +9,8 @@ import { UserServiceProvider } from '../../providers/user-service/user-service';
   templateUrl: 'addBuyerOrder.html'
 })
 export class addBuyerOrder {
-  ClientId: string;
-  ItemId:string;
+  ClientId: number;
+  ItemId:number;
   Quantity:number;
   Melt:number;
   ExpectedDate:Date;
@@ -44,8 +45,30 @@ this.userService.GetMyItems()
       //             {Name:"Bowl",Id:"B"}]
   }
   addBuyerOrder() {
-    console.log(this.ClientId + this.ItemId + this.Quantity + this.Melt + 
+    let wOrder:orderModel = new orderModel(0,this.ClientId,this.ItemId,this.Quantity,this.Melt,this.AdvanceAmount,0,this.ExpectedDate,null,null,"",0,2)
+    console.log(wOrder);
+    this.userService.AddOrder(wOrder)
+    .subscribe(addedOrder => {
+      this.showAlert("Success","Order has been added successfully");
+      console.log(addedOrder);
+      this.reset();
+    },
+      (error:any) => {
+        console.log(error.message);
+        this.showAlert("Error",error.message);
+        console.log("Error");
+      }
+    );
+    console.log(this.ClientId.toString() + this.ItemId + this.Quantity + this.Melt + 
       this.ExpectedDate + this.AdvanceAmount);
+  }
+  showAlert(title, message) {
+    const alert = this.alertCtrl.create({
+      title: title,
+      subTitle: message,
+      buttons: ['OK']
+    });
+    alert.present();
   }
 
   reset(){

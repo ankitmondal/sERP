@@ -1,14 +1,21 @@
+import { addWorkerPurchase } from './../addWorkerPurchase/addWorkerPurchase';
 import { Component } from '@angular/core';
 import { NavController,AlertController,ActionSheetController } from 'ionic-angular';
+import { UserServiceProvider } from '../../providers/user-service/user-service';
+// import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
+  Orders:any;
+  cActiveOrders:any;
+  wActiveOrders:any;
   icons: string[];
   items: Array<{ title: string, note: string, icon: string }>;
-  constructor(public navCtrl: NavController,public alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController) {
+  constructor(public navCtrl: NavController,public alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController,
+    public userService:UserServiceProvider) {
     this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
     'american-football', 'boat', 'bluetooth', 'build'];
 
@@ -20,7 +27,28 @@ export class HomePage {
       icon: this.icons[Math.floor(Math.random() * this.icons.length)]
     });
   }
+
+  this.userService.GetOrders()
+  .subscribe((myOrders:any) => {
+    // console.log(myOrders);
+    this.Orders = myOrders;
+    this.cActiveOrders = this.filterData(2);
+    this.wActiveOrders = this.filterData(1);
+    // console.log(this.cOrders);
+  },
+    (error:any) => {
+      console.log(error);
+    });
+
+   
   }
+
+   filterData(oType) {
+    return this.Orders.filter(object => {
+      return object['oType'] == oType;
+    });
+  }
+  
 
   showUpdateDeleteActionSheet() {
     const actionSheet = this.actionSheetCtrl.create({
@@ -31,6 +59,7 @@ export class HomePage {
           role: 'Edit',
           handler: () => {
             console.log('Destructive clicked');
+            
             this.showAlert("Item Edited", "Your Item has been updated");
           }
         }, {

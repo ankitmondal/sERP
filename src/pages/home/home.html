@@ -25,21 +25,21 @@
   </ion-card>
   <ion-card>
       <ion-card-header>
-        Active Order from Clients(Client Wise)
+        Active Order from Clients
       </ion-card-header>
       <ion-list>
-        <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-          <ion-icon [name]="item.icon" item-start></ion-icon>
-          {{item.title}}
+        <button ion-item *ngFor="let order of cActiveOrders" (click)="itemTapped($event, order)">
+          <div item-start Strong>{{order.OrdererName}}</div>
+          <div item Strong>{{order.itemName}}</div>    
           <div class="item-note" item-end>
-            {{item.note}}
+            {{order.expectedDate|date}}
           </div>
         </button>
       </ion-list>
      
     </ion-card>
   <br/>
-  <ion-card>
+  <!-- <ion-card>
       <ion-card-header>
         Active Order with Workers
       </ion-card-header>
@@ -55,8 +55,22 @@
         </button>
       </ion-list>
      
+    </ion-card> -->
+    <ion-card>
+      <ion-card-header>
+        Active Order with Workers
+      </ion-card-header>
+      <ion-list>
+        <button ion-item *ngFor="let order of wActiveOrders" (click)="itemTapped($event, order)">
+          <div item-start Strong>{{order.OrdererName}}</div>
+          <div item Strong>{{order.itemName}}</div>                 
+          <div class="item-note" item-end>
+            {{order.expectedDate|date}}
+          </div>
+        </button>
+      </ion-list>
+     
     </ion-card>
-
     <ion-card>
         <ion-card-header>
           Blanace Sheet(Client Side)

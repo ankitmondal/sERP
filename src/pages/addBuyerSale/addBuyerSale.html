@@ -12,14 +12,14 @@
     <ion-item-group>
       <ion-item>
         <ion-label fixed>Client Name</ion-label>
-        <ion-select [(ngModel)]="ClientName">
+        <ion-select [(ngModel)]="ClientId">
           <ion-option *ngFor="let client of Clients" [value]="client.clientID">{{client.clientName}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label fixed>Item</ion-label>
-        <ion-select [(ngModel)]="ItemName">
-          <ion-option *ngFor="let item of Items" [value]="item.Id">{{item.Name}}</ion-option>
+        <ion-select [(ngModel)]="ItemId">
+          <ion-option *ngFor="let item of Items" [value]="item.itemID">{{item.itemName}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item>
@@ -49,7 +49,7 @@
         <ion-icon name="calculator"></ion-icon>Calculate
       </button>
       <button ion-button icon-left (click)="presentModal();" [disabled]="Fine === null || Fine === 0">
-        <ion-icon name="cloud-upload"></ion-icon>Save
+        <ion-icon name="cloud-upload"></ion-icon>Submit
       </button>
     </ion-buttons>
   </div>
@@ -69,7 +69,7 @@
         <ion-label>Balance : {{Fine-MetalPaid}}</ion-label>
       </ion-item>
     </ion-item-group>
-    <button ion-button block (click)='purchaseFromWorker();'>Save</button>
+    <button ion-button block (click)='SaleToClient();'>Save</button>
   </div>
 
 </ion-content>
