@@ -1,7 +1,7 @@
 import { workerModel } from './../../models/worker.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+
 import 'rxjs/add/operator/map';
 import { config  } from '../service-config/service-config';
 import { itemModel  } from '../../models/item.model';

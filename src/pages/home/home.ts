@@ -1,4 +1,4 @@
-import { addWorkerPurchase } from './../addWorkerPurchase/addWorkerPurchase';
+
 import { Component } from '@angular/core';
 import { NavController,AlertController,ActionSheetController } from 'ionic-angular';
 import { UserServiceProvider } from '../../providers/user-service/user-service';

@@ -1,4 +1,4 @@
-import { AdminServiceProvider } from './../../providers/admin-service/admin-service';
+
 import { Component } from '@angular/core';
 import { orderModel } from '../../models/order.model';
 import { ModalController,NavController,AlertController, DateTime } from 'ionic-angular';
