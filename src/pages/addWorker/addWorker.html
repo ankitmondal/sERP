@@ -40,7 +40,7 @@
     </ion-card-header>
     <ion-list>
       <button ion-item *ngFor="let worker of Workers" (click)="itemTapped($event, worker)">
-        <ion-icon [name]="worker.icon" item-start></ion-icon>
+        <!-- <ion-icon [name]="worker.icon" item-start></ion-icon> -->
         {{worker.workerName}}
         <div class="item-note" item-end>
           {{worker.wAddress}}

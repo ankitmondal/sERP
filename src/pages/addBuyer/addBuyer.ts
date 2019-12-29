@@ -105,7 +105,7 @@ export class addBuyer {
           text: 'Delete',
           handler: () => {
             console.log('Remove clicked for '+client.clientID);
-            this.adminService.DeleteItem(client.clientID).subscribe((res: any) => console.log("user deleted"));;
+            this.adminService.DeleteClient(client.clientID).subscribe((res: any) => console.log("user deleted"));;
             this.showAlert("Buyer Deleted", "Your Client has been removed from list");
             this.getClient();
           }

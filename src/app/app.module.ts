@@ -33,6 +33,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserServiceProvider } from '../providers/user-service/user-service';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { AdminServiceProvider } from '../providers/admin-service/admin-service';
+import { HttpModule } from "@angular/http";
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { AdminServiceProvider } from '../providers/admin-service/admin-service';
   imports: [
     BrowserModule,
     HttpClientModule,
+    HttpModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],

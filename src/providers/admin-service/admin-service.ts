@@ -1,119 +1,104 @@
 import { workerModel } from './../../models/worker.model';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Http, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
 
 import 'rxjs/add/operator/map';
 import { config  } from '../service-config/service-config';
 import { itemModel  } from '../../models/item.model';
 import { clientModel  } from '../../models/client.model';
+
 @Injectable()
 export class AdminServiceProvider {
-  _apiUrl: string;
+  apiUrl: string;
+  token:string = localStorage.getItem('userToken');
+ 
+  header:Headers = new Headers({'Content-Type': 'application/json',
+                                'Authorization':'Bearer ' + this.token  });
+        
+  nullObject :object = {};
 
-  constructor(public http: HttpClient) {
+  constructor(public http: Http) {
     console.log('Hello Admin Provider');
-    this._apiUrl = config.url;
+    this.apiUrl = config.url;
   } 
 
   AddWorker(WorkerName: string, age: number, address: string, phoneNumber: string) {
-    var token = localStorage.getItem('userToken');
-    var queryString = "api/SilverERPWorker?WorkerName=" + WorkerName + "&Age=" + age + "&Address=" + address + "&PhoneNumber=" + phoneNumber;
-    const header = new HttpHeaders({'Authorization':'Bearer ' + token}); 
-    let options = {
-        headers: header
-    };        
-    return this.http.post(this._apiUrl + queryString , "" , options);
+    var queryString = "api/Worker/AddWorker?WorkerName=" + WorkerName + "&Age=" + age + "&Address=" + address + "&PhoneNumber=" + phoneNumber;
+    
+    return this.http.post(this.apiUrl + queryString , this.nullObject , { headers : this.header });
   }  
 
-  UpdateWorker(kId: number,worker: workerModel) {
-    var token = localStorage.getItem('userToken');
-    var queryString = "api/SilverERPWorker?id="+kId;
+  UpdateWorker(kId: number, worker: workerModel) {
+    var queryString = "api/Worker/UpdateWorker?id="+kId;
     console.log(queryString);
-    const header = new HttpHeaders({'Authorization':'Bearer ' + token}); 
-    let options = {
-        headers: header ,        
-    };        
-    return this.http.put(this._apiUrl + queryString,worker,options);
+    console.log(worker);
+     let headers:Headers = new Headers ();
+     headers.append('Content-Type', 'application/json');
+     headers.append('Authorization', 'Bearer ' + this.token );
+
+    return this.http.post(this.apiUrl + queryString, worker, { headers : headers});
   }
 
   DeleteWorker(kId: number) {
-    var token = localStorage.getItem('userToken');
-    var queryString = "api/SilverERPWorker?id="+kId;
+    var queryString = "api/Worker/DeleteWorker?id="+kId;
     console.log(queryString);
-    const header = new HttpHeaders({'Authorization':'Bearer ' + token}); 
-    let options = {
-        headers: header ,          
-    };        
-    return this.http.delete(this._apiUrl + queryString,options);
+          
+    return this.http.delete(this.apiUrl + queryString,{ headers : this.header });
   }
 
   AddItem(item: itemModel) {
-    var token = localStorage.getItem('userToken');
     var queryString = "api/SilverERPItem";
-    const header = new HttpHeaders({'Authorization':'Bearer ' + token}); 
-    let options = {
-        headers: header
-    };        
-    return this.http.post(this._apiUrl + queryString , item, options);
+    return this.http.post(this.apiUrl + queryString , item, { headers : this.header });
   }
 
   UpdateItem(itemID: number,item: itemModel) {
-    var token = localStorage.getItem('userToken');
     var queryString = "api/SilverERPItem?id="+itemID;
     console.log(queryString);
-    const header = new HttpHeaders({'Authorization':'Bearer ' + token}); 
+    
     let options = {
-        headers: header ,
-        //params:{id : itemID}     
+        headers: this.header     
     };        
-    return this.http.put(this._apiUrl + queryString,item,options);
+    return this.http.put(this.apiUrl + queryString,item,options);
   }
 
   DeleteItem(itemID: number) {
-    var token = localStorage.getItem('userToken');
     var queryString = "api/SilverERPItem?id="+itemID;
     console.log(queryString);
-    const header = new HttpHeaders({'Authorization':'Bearer ' + token}); 
+    
     let options = {
-        headers: header ,
-        //params:{id : itemID}     
+        headers: this.header    
     };        
-    return this.http.delete(this._apiUrl + queryString,options);
+    return this.http.delete(this.apiUrl + queryString,options);
   }
 
 
   AddClient(client: clientModel) {
-    var token = localStorage.getItem('userToken');
-    var queryString = "api/SilverERPClient";
-    const header = new HttpHeaders({'Authorization':'Bearer ' + token}); 
+    var queryString = "api/Client/AddClient";
+    
     let options = {
-        headers: header
+        headers: this.header
     };        
-    return this.http.post(this._apiUrl + queryString , client, options);
+    return this.http.post(this.apiUrl + queryString , client, options);
   }
 
   UpdateClient(clientID: number,client: clientModel) {
-    var token = localStorage.getItem('userToken');
     var queryString = "api/SilverERPClient?id="+clientID;
     console.log(queryString);
-    const header = new HttpHeaders({'Authorization':'Bearer ' + token}); 
     let options = {
-        headers: header ,
-        //params:{id : itemID}     
+        headers: this.header     
     };        
-    return this.http.put(this._apiUrl + queryString,client,options);
+
+    return this.http.put(this.apiUrl + queryString,client,options);
   }
 
   DeleteClient(clientID: number) {
-    var token = localStorage.getItem('userToken');
     var queryString = "api/SilverERPClient?id="+clientID;
     console.log(queryString);
-    const header = new HttpHeaders({'Authorization':'Bearer ' + token}); 
+    
     let options = {
-        headers: header ,
-        //params:{id : itemID}     
+        headers: this.header   
     };        
-    return this.http.delete(this._apiUrl + queryString,options);
+    return this.http.delete(this.apiUrl + queryString,options);
   }
 
   

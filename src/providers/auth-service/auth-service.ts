@@ -1,7 +1,8 @@
-import { HttpClient, HttpHeaders,HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
+import { config } from '../service-config/service-config'
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
+
+
 export class User {
   name: string;
   email: string;
@@ -15,29 +16,27 @@ export class User {
 @Injectable()
 export class AuthServiceProvider {
   currentUser: User;
-  rootUrl: 'http://localhost:50693/';
-  //rootUrl: 'http://api.proxyraja.com/';
-
+  apiUrl: string;
+ 
   constructor(public http: HttpClient) {
     console.log('Hello AuthServiceProvider Provider');
+    this.apiUrl = config.url;
   }
 
   public login(credentials) {
-    credentials.email="testing@test.com";
-    credentials.password="Abcd*1234";
+    // credentials.email="testing@test.com";
+    // credentials.password="Abcd*1234";
 
     var data = "username=" + credentials.email + "&password=" + credentials.password + "&grant_type=password";
-    // const httpOptions = {
-    //   headers: new HttpHeaders({ 'Content-Type': 'application/x-www-urlencoded','No-Auth':'True' })
-    // };
+   
     const header: HttpHeaders = new HttpHeaders();
     header.append('Content-Type', 'application/x-www-urlencoded');
     header.append('No-Auth', 'True');
     const httpOptions = {
       headers: header
     };
-    return this.http.post('http://localhost:50693/Token', data, httpOptions); 
-    //return this.http.post('http://api.proxyraja.com/Token', data, httpOptions);
+     var authUrl  = this.apiUrl + 'Token';
+    return this.http.post(authUrl, data, httpOptions); 
   }
 
 

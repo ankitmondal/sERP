@@ -97,10 +97,10 @@ export class addWorker implements OnInit {
           handler: () => {
             console.log('Update clicked for' +worker.workerName );
             this.WorkerName= worker.workerName;
-  this.age=worker.wAge;
-  this.address=worker.wAddress ;
-  this.phoneNumber=worker.wPhone ;
-  this.kID=worker.kID ;
+            this.age=worker.wAge;
+            this.address=worker.wAddress ;
+            this.phoneNumber=worker.wPhone ;
+            this.kID=worker.kID ;
             this.showAlert("Worker Edit", "Your Worker details has been loaded");
           }
         }, {
