@@ -39,4 +39,35 @@
     </ion-item>
   </ion-item-group>
   <button ion-button block (click)='addWorkerOrder();'>Save</button>
+  <br>
+  <ion-card>
+    <ion-card-header>
+      Added Orders
+    </ion-card-header>
+    <!-- <ion-list> -->
+      <ion-grid>
+      <button ion-row *ngFor="let order of Orders" (click)="itemTapped($event, worker)">
+       <ion-col col-3>
+        <!-- <ion-icon [name]="worker.icon" item-start></ion-icon> -->
+        <!-- <div class="item-note" item-start> -->
+          {{order.itemID}}
+        <!-- </div> -->
+      </ion-col>
+      <ion-col col-3>
+        {{order.karigarID}}
+      </ion-col>
+      <ion-col col-3>
+        <!-- <div class="item-note" > -->
+          {{order.quantity}}
+        <!-- </div> -->
+      </ion-col>
+      <ion-col col-3>
+        <!-- <div class="item-note" item-end> -->
+          {{order.expectedDate | date:"MM/dd/yy"}}
+        <!-- </div> -->
+      </ion-col>
+      </button>
+    </ion-grid>
+    <!-- </ion-list> -->
+  </ion-card>
 </ion-content>

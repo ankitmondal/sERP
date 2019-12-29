@@ -1,5 +1,5 @@
 import { orderModel } from '../../models/order.model';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController,AlertController } from 'ionic-angular';
 import { AdminServiceProvider } from '../../providers/admin-service/admin-service';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
@@ -7,7 +7,7 @@ import { UserServiceProvider } from '../../providers/user-service/user-service';
   selector: 'page-addWorkerOrder',
   templateUrl: 'addWorkerOrder.html'
 })
-export class addWorkerOrder {
+export class addWorkerOrder implements OnInit {
   WorkerID: number;
   ItemID:number;
   Quantity:number;
@@ -17,6 +17,7 @@ export class addWorkerOrder {
   Description: string;
   Workers: any;//Array<{Name: string, Id: string}>;
   Items:any;//Array<{Name:string,Id:string}>;
+  Orders:any;
 
   constructor(public navCtrl: NavController, public alertCtrl: AlertController,
     public adminService:AdminServiceProvider,public userService:UserServiceProvider) {
@@ -47,6 +48,7 @@ export class addWorkerOrder {
       //             {Name:"Plate",Id:"P"},
       //             {Name:"Bowl",Id:"B"}]
   }
+
   addWorkerOrder() {
     let wOrder:orderModel = new orderModel(0,this.WorkerID,this.ItemID,this.Quantity,this.Melt,this.AdvanceAmount,0,this.ExpectedDate,null,null,"",0,1)
     console.log(wOrder);
@@ -55,6 +57,7 @@ export class addWorkerOrder {
       this.showAlert("Success","Order has been added successfully");
       console.log(addedOrder);
       this.reset();
+      this.getWorkerOrder();
     },
       (error:any) => {
         console.log(error.message);
@@ -81,5 +84,22 @@ export class addWorkerOrder {
     this.Melt = 0;
     this.ExpectedDate =null;
      this.AdvanceAmount=0;
+  }
+
+  getWorkerOrder(){
+    this.userService.GetOrders()
+        .subscribe((data:any)=>{
+          this.Orders=data;
+          console.log(this.Orders);
+        },
+        (error:any) =>{
+          console.log(error.message);
+          this.showAlert("Error",error.message);
+          console.log("Error");
+      });
+
+  }
+  ngOnInit(){
+    this.getWorkerOrder();
   }
 }

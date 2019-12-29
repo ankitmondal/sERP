@@ -16,7 +16,7 @@ import { HomePage } from '../../pages/home/home';
 })
 export class LoginPage {
   loading: Loading;
-  registerCredentials = { email: '', password: '' };
+  registerCredentials = { email: 'testing@test.com', password: 'Test@123' };
 
   constructor(public navCtrl: NavController, private auth: AuthServiceProvider, public navParams: NavParams, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
   }

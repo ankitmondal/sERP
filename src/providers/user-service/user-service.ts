@@ -1,4 +1,4 @@
-import { Http, Headers } from '@angular/http';
+import { Http, Headers , BaseRequestOptions } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { config } from '../service-config/service-config'
 import { orderModel } from './../../models/order.model';
@@ -16,7 +16,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 export class UserServiceProvider {
   apiUrl: string;
   token:string = localStorage.getItem('userToken');
-  httpOptions = {
+  httpOptions  = {
     headers: new Headers({ 'Content-Type': 'application/json',
                            'Authorization':'Bearer ' + this.token  
                          })
@@ -28,10 +28,6 @@ export class UserServiceProvider {
   }
   //Get Worker by user id
   GetWorker() {
-    let header = new HttpHeaders({ 'Content-Type': 'application/json',
-                                  'Authorization':'Bearer ' + this.token  
-  })
-    console.log(this.httpOptions);
     return this.http.get( this.apiUrl + 'api/Worker/GetWorker', this.httpOptions)
     .map( (res: any) => {
       return res.json()

@@ -1,5 +1,4 @@
 import { workerModel } from './../../models/worker.model';
-//import { Woker } from './../../app/worker';
 import { Component, OnInit } from '@angular/core';
 import { NavController, AlertController, ActionSheetController } from 'ionic-angular';
 import { AdminServiceProvider } from '../../providers/admin-service/admin-service';
@@ -41,7 +40,7 @@ export class addWorker implements OnInit {
   addWorker() {
     let worker:workerModel = new workerModel(this.WorkerName,this.address,this.phoneNumber,this.age,this.kID);
 
-    if(worker.kID === undefined){
+    if(this.kID === undefined){
     this.adminService.AddWorker(this.WorkerName , this.age , this.address , this.phoneNumber)
     .subscribe(addedWorker => {
       this.showAlert("Success","Worker has been added successfully");
@@ -57,7 +56,8 @@ export class addWorker implements OnInit {
     );
   }
     else{
-      this.adminService.UpdateWorker(this.kID,worker)
+      console.log(worker);
+      this.adminService.UpdateWorker(this.kID, worker)
       .subscribe(UpdatedWorker => {
         this.showAlert("Success","Worker has been Updated successfully");
         console.log(UpdatedWorker);
@@ -133,7 +133,7 @@ export class addWorker implements OnInit {
   }
 
   itemTapped(event, item) {
-    console.log(event);
+    // console.log(event);
     console.log(item);
     this.showUpdateDeleteActionSheet(item);
   }
