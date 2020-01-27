@@ -44,30 +44,22 @@
     <ion-card-header>
       Added Orders
     </ion-card-header>
-    <!-- <ion-list> -->
       <ion-grid>
+        <ion-row>
+          <ion-col col-3>Item</ion-col>
+          <ion-col col-3>Worker</ion-col>
+          <ion-col col-3>Quantity</ion-col>
+          <ion-col col-3>Expected Date</ion-col>
+        </ion-row>
       <button ion-row *ngFor="let order of Orders" (click)="itemTapped($event, worker)">
        <ion-col col-3>
         <!-- <ion-icon [name]="worker.icon" item-start></ion-icon> -->
-        <!-- <div class="item-note" item-start> -->
-          {{order.itemID}}
-        <!-- </div> -->
+          {{order.itemName}}
       </ion-col>
-      <ion-col col-3>
-        {{order.karigarID}}
-      </ion-col>
-      <ion-col col-3>
-        <!-- <div class="item-note" > -->
-          {{order.quantity}}
-        <!-- </div> -->
-      </ion-col>
-      <ion-col col-3>
-        <!-- <div class="item-note" item-end> -->
-          {{order.expectedDate | date:"MM/dd/yy"}}
-        <!-- </div> -->
-      </ion-col>
+      <ion-col col-3>{{order.workerName}}</ion-col>
+      <ion-col col-3>{{order.quantity}}</ion-col>
+      <ion-col col-3>{{order.expectedDate | date:"MM/dd/yy"}}</ion-col>
       </button>
     </ion-grid>
-    <!-- </ion-list> -->
   </ion-card>
 </ion-content>

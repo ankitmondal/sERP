@@ -11,7 +11,7 @@ export class orderModel {
         public expectedDate?: Date,
         public createDate?: Date,
         public closingDate?: Date,
-        public description?: string,
+        public payment?: number,
     public oStatus?: number,
     public oType?: number){}
 }

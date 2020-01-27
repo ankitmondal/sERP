@@ -32,9 +32,7 @@ export class addWorkerPurchase {
       (error:any) => {
         console.log(error);
       });
-    // this.Workers = [{ Name: "Ankit", Id: "AM" },
-    // { Name: "Purnendu", Id: "PM" },
-    // { Name: "Sukhendu", Id: "SM" }];
+    
     this.userService.GetMyItems()
     .subscribe((myItems:any) => {
       console.log(myItems);
@@ -43,19 +41,17 @@ export class addWorkerPurchase {
       (error:any) => {
         console.log(error);
       });
-    // this.Items = [{ Name: "Dish", Id: "D" },
-    // { Name: "Plate", Id: "P" },
-    // { Name: "Bowl", Id: "B" }]
+   
   }
   purchaseFromWorker() {
-    let wOrder:orderModel = new orderModel(0,this.WorkerID,this.ItemID,this.Fine,this.Melt,this.Advance,0,null,null,null,"",0,3)
+    let wOrder:orderModel = new orderModel(0,this.WorkerID,this.ItemID,this.Quantity,this.Melt,this.Advance,this.Fine,null,null,null,this.MetalPaid,0,3)
     console.log(this.WorkerID);
 
     this.userService.AddOrder(wOrder)
     .subscribe(addedOrder => {
       this.showAlert("Success","Order has been added successfully");
       console.log(addedOrder);
-      // this.reset();
+      this.reset();
     },
       (error:any) => {
         console.log(error.message);
@@ -63,9 +59,7 @@ export class addWorkerPurchase {
         console.log("Error");
       }
     );
-    // console.log(this.WorkerName + this.ItemName + this.Quantity + this.Melt +
-    //   this.Wastage + this.Payment);
-    // this.submitted = false;
+    
   }
   showAlert(title, message) {
     const alert = this.alertCtrl.create({
@@ -82,5 +76,16 @@ export class addWorkerPurchase {
   presentModal() {
     this.submitted = true;
   }
-
+  reset(){
+    this.submitted=false;
+    this.WorkerID=0;
+    this.ItemID=0;
+    this.Quantity = 0;
+    this.Melt=0 ;
+    this.Wastage=0;
+    this.Payment = this.Melt + this.Wastage;
+    this.Fine = this.Quantity * this.Payment / 100;
+    this.Advance=0;
+    this.MetalPaid=0;
+  }
 }

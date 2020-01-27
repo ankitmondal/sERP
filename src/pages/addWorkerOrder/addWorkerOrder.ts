@@ -50,7 +50,7 @@ export class addWorkerOrder implements OnInit {
   }
 
   addWorkerOrder() {
-    let wOrder:orderModel = new orderModel(0,this.WorkerID,this.ItemID,this.Quantity,this.Melt,this.AdvanceAmount,0,this.ExpectedDate,null,null,"",0,1)
+    let wOrder:orderModel = new orderModel(0,this.WorkerID,this.ItemID,this.Quantity,this.Melt,this.AdvanceAmount,0,this.ExpectedDate,null,null,0,0,1)
     console.log(wOrder);
     this.userService.AddOrder(wOrder)
     .subscribe(addedOrder => {
@@ -87,7 +87,7 @@ export class addWorkerOrder implements OnInit {
   }
 
   getWorkerOrder(){
-    this.userService.GetOrders()
+    this.userService.GetOrderSummary()
         .subscribe((data:any)=>{
           this.Orders=data;
           console.log(this.Orders);

@@ -55,6 +55,13 @@ export class UserServiceProvider {
     });
   }
 
+  GetOrderSummary() {
+    return this.http.get( this.apiUrl + 'api/Order/GetOrderSummary', this.httpOptions)
+    .map( (res: any) => {
+      return res.json()
+    });
+  }
+
   AddOrder(wOrder: orderModel) {
     var routeString = "api/Order/AddOrder";
     return this.http.post(this.apiUrl + routeString , wOrder, this.httpOptions);

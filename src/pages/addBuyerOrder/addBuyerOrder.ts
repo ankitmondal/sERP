@@ -45,7 +45,7 @@ this.userService.GetMyItems()
       //             {Name:"Bowl",Id:"B"}]
   }
   addBuyerOrder() {
-    let wOrder:orderModel = new orderModel(0,this.ClientId,this.ItemId,this.Quantity,this.Melt,this.AdvanceAmount,0,this.ExpectedDate,null,null,"",0,2)
+    let wOrder:orderModel = new orderModel(0,this.ClientId,this.ItemId,this.Quantity,this.Melt,this.AdvanceAmount,0,this.ExpectedDate,null,null,0,0,2)
     console.log(wOrder);
     this.userService.AddOrder(wOrder)
     .subscribe(addedOrder => {
