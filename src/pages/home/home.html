@@ -21,56 +21,39 @@
         </div>
       </button>
     </ion-list>
-   
   </ion-card>
+
   <ion-card>
       <ion-card-header>
         Active Order from Clients
       </ion-card-header>
       <ion-list>
         <button ion-item *ngFor="let order of cActiveOrders" (click)="itemTapped($event, order)">
-          <div item-start Strong>{{order.OrdererName}}</div>
-          <div item Strong>{{order.itemName}}</div>    
-          <div class="item-note" item-end>
-            {{order.expectedDate|date}}
+          <div col-4 item-start Strong>{{order.clientName | split:' '}}</div>
+          <div col-5 item Strong>{{order.itemName}}</div>    
+          <div xcol-3 class="item-note" item-end>
+            {{order.expectedDate|date:'dd/MM'}}
           </div>
         </button>
       </ion-list>
-     
     </ion-card>
   <br/>
-  <!-- <ion-card>
-      <ion-card-header>
-        Active Order with Workers
-      </ion-card-header>
-      <ion-list>
-        <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-            <ion-avatar item-start>
-                <img src="assets/imgs/logo.png">
-              </ion-avatar>
-          {{item.title}}
-          <div class="item-note" item-end>
-            {{item.note}}
-          </div>
-        </button>
-      </ion-list>
-     
-    </ion-card> -->
+ 
     <ion-card>
       <ion-card-header>
         Active Order with Workers
       </ion-card-header>
       <ion-list>
         <button ion-item *ngFor="let order of wActiveOrders" (click)="itemTapped($event, order)">
-          <div item-start Strong>{{order.OrdererName}}</div>
-          <div item Strong>{{order.itemName}}</div>                 
-          <div class="item-note" item-end>
-            {{order.expectedDate|date}}
+          <div col-4 item-start strong>{{order.workerName | split:' '}}</div>
+          <div col-5 item Strong>{{order.itemName}}</div>
+          <div xcol-3 class="item-note" item-end>
+            {{order.expectedDate|date:'dd/MM'}}
           </div>
         </button>
       </ion-list>
-     
     </ion-card>
+
     <ion-card>
         <ion-card-header>
           Blanace Sheet(Client Side)
@@ -89,8 +72,8 @@
             <ion-label style="font:bold">Total :  </ion-label>
           </ion-item>
         </ion-list>
-       
       </ion-card>
+
       <ion-card>
           <ion-card-header>
             Blanace Sheet(Worker Side)
@@ -109,6 +92,6 @@
                 <ion-label style="font:bold">Total :  </ion-label>
               </ion-item>
           </ion-list>
-          
         </ion-card>
+
 </ion-content>

@@ -22,35 +22,28 @@ export class addWorkerOrder implements OnInit {
   constructor(public navCtrl: NavController, public alertCtrl: AlertController,
     public adminService:AdminServiceProvider,public userService:UserServiceProvider) {
 
-    this.userService.GetWorker()
-    .subscribe((myWorkers:any) => {
-      console.log(myWorkers);
-      this.Workers = myWorkers;
-    },
-      (error:any) => {
-        console.log(error);
-      });
-    
-
-      // this.Workers=[{Name:"Ankit",Id:"AM"},
-      //               {Name:"Purnendu",Id:"PM"},
-      //               {Name:"Sukhendu",Id:"SM"}];
+      this.userService.GetWorker()
+      .subscribe((myWorkers:any) => {
+        console.log(myWorkers);
+        this.Workers = myWorkers;
+      },
+        (error:any) => {
+          console.log(error);
+        });
 
       this.userService.GetMyItems()
-    .subscribe((myItems:any) => {
-      console.log(myItems);
-      this.Items = myItems;
-    },
-      (error:any) => {
-        console.log(error);
-      });
-      // this.Items=[{Name:"Dish",Id:"D"},
-      //             {Name:"Plate",Id:"P"},
-      //             {Name:"Bowl",Id:"B"}]
+          .subscribe((myItems:any) => {
+            console.log(myItems);
+            this.Items = myItems;
+          },
+          (error:any) => {
+            console.log(error);
+          });
   }
 
   addWorkerOrder() {
-    let wOrder:orderModel = new orderModel(0,this.WorkerID,this.ItemID,this.Quantity,this.Melt,this.AdvanceAmount,0,this.ExpectedDate,null,null,0,0,1)
+    let wOrder:orderModel = new orderModel(0,this.WorkerID,this.ItemID,this.Quantity,
+                                           this.Melt,this.AdvanceAmount,0,this.ExpectedDate,null,null,0,0,1)
     console.log(wOrder);
     this.userService.AddOrder(wOrder)
     .subscribe(addedOrder => {
@@ -87,7 +80,7 @@ export class addWorkerOrder implements OnInit {
   }
 
   getWorkerOrder(){
-    this.userService.GetOrderSummary()
+    this.userService.GetWorkerOrderSummary()
         .subscribe((data:any)=>{
           this.Orders=data;
           console.log(this.Orders);

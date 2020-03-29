@@ -1,46 +1,24 @@
-
-import { Component } from '@angular/core';
+import { Component ,OnInit } from '@angular/core';
 import { NavController,AlertController,ActionSheetController } from 'ionic-angular';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
-// import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-export class HomePage {
+export class HomePage implements OnInit {
   Orders:any;
   cActiveOrders:any;
   wActiveOrders:any;
   icons: string[];
   items: Array<{ title: string, note: string, icon: string }>;
-  constructor(public navCtrl: NavController,public alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController,
-    public userService:UserServiceProvider) {
-    this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
-    'american-football', 'boat', 'bluetooth', 'build'];
 
-  this.items = [];
-  for (let i = 1; i < 11; i++) {
-    this.items.push({
-      title: 'Item ' + i,
-      note: 'This is item #' + i,
-      icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-    });
-  }
+  constructor(public navCtrl: NavController,public alertCtrl: AlertController, 
+              public actionSheetCtrl: ActionSheetController,
+              public userService:UserServiceProvider) {
 
-  this.userService.GetOrders()
-  .subscribe((myOrders:any) => {
-    // console.log(myOrders);
-    this.Orders = myOrders;
-    this.cActiveOrders = this.filterData(2);
-    this.wActiveOrders = this.filterData(1);
-    // console.log(this.cOrders);
-  },
-    (error:any) => {
-      console.log(error);
-    });
-
-   
+      this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
+                  'american-football', 'boat', 'bluetooth', 'build'];
   }
 
    filterData(oType) {
@@ -79,6 +57,7 @@ export class HomePage {
     });
     actionSheet.present();
   }
+
   showAlert(title, message) {
     const alert = this.alertCtrl.create({
       title: title,
@@ -98,4 +77,55 @@ export class HomePage {
     this.showUpdateDeleteActionSheet();
   }
 
+  getWorkerOrder(){
+    this.userService.GetWorkerOrderSummary()
+        .subscribe((data:any)=>{
+          this.wActiveOrders=data;
+          console.log(this.Orders);
+        },
+        (error:any) =>{
+          console.log(error.message);
+          this.showAlert("Error",error.message);
+          console.log("Error");
+      });
+  }
+
+  getClientOrder(){
+    this.userService.GetClientOrderSummary()
+        .subscribe((data:any)=>{
+          this.cActiveOrders=data;
+          console.log(this.Orders);
+        },
+        (error:any) =>{
+          console.log(error.message);
+          this.showAlert("Error",error.message);
+          console.log("Error");
+      });
+  }
+
+  getOrderSummary(){
+    this.userService.GetOrderSummary()
+        .subscribe((data:any)=>{
+          this.items = [];
+          for (let i = 0; i < data.length; i++) {
+            this.items.push({
+              title: data[i].itemName,
+              note: data[i].Quantity,
+              icon: this.icons[Math.floor(Math.random() * this.icons.length)]
+            });
+          }
+          console.log(this.Orders);
+        },
+        (error:any) =>{
+          console.log(error.message);
+          this.showAlert("Error",error.message);
+          console.log("Error");
+    });
+  }
+
+  ngOnInit(){
+    this.getWorkerOrder();
+    this.getClientOrder();
+    this.getOrderSummary();
+  }
 }

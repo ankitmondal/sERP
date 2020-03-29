@@ -39,4 +39,27 @@
       </ion-item>
     </ion-item-group>
     <button ion-button block (click)='addBuyerOrder();'>Save</button>
+    <br>
+    <ion-card>
+      <ion-card-header>
+        Added Orders
+      </ion-card-header>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-3>Item</ion-col>
+            <ion-col col-3>Client</ion-col>
+            <ion-col col-3>Quantity</ion-col>
+            <ion-col col-3>Expected Date</ion-col>
+          </ion-row>
+        <button ion-row *ngFor="let order of Orders" (click)="itemTapped($event, order)">
+         <ion-col col-3>
+          <!-- <ion-icon [name]="worker.icon" item-start></ion-icon> -->
+            {{order.itemName}}
+        </ion-col>
+        <ion-col col-3>{{order.clientName}}</ion-col>
+        <ion-col col-3>{{order.quantity}}</ion-col>
+        <ion-col col-3>{{order.expectedDate | date:"MM/dd/yy"}}</ion-col>
+        </button>
+      </ion-grid>
+    </ion-card>
   </ion-content>

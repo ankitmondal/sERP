@@ -13,7 +13,7 @@ export class addBuyerSale {
   Quantity: number = 0;
   Melt: number = 58;
   Wastage: number = 5;
-  Payment: number = this.Melt + this.Wastage;
+  Payment: number = (this.Melt*1 + this.Wastage*1);
   Fine: number = this.Quantity * this.Payment / 100;
   Advance: number = 0;
   MetalPaid: number;
@@ -43,7 +43,7 @@ export class addBuyerSale {
     
   }
   SaleToClient() {
-    let bOrder:orderModel = new orderModel(0,this.ClientId,this.ItemId,this.Fine,this.Melt,this.Advance,this.Fine,null,null,null,this.MetalPaid,0,4)
+    let bOrder:orderModel = new orderModel(0,this.ClientId,this.ItemId,this.Quantity,this.Melt,this.Advance,this.Fine,null,null,null,this.MetalPaid,0,4)
     console.log(bOrder);
     this.userService.AddOrder(bOrder)
     .subscribe(addedOrder => {

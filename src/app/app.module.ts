@@ -35,6 +35,9 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { AdminServiceProvider } from '../providers/admin-service/admin-service';
 import { HttpModule } from "@angular/http";
 
+import { PipesModule} from "../pipes/pipes.module";
+
+
 @NgModule({
   declarations: [
     MyApp,
@@ -54,6 +57,7 @@ import { HttpModule } from "@angular/http";
     BrowserModule,
     HttpClientModule,
     HttpModule,
+    PipesModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],

@@ -6,12 +6,7 @@ import { HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 
 import 'rxjs/add/operator/map';
 import { catchError, map, tap } from 'rxjs/operators';
-/*
-  Generated class for the UserServiceProvider provider.
 
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class UserServiceProvider {
   apiUrl: string;
@@ -48,15 +43,22 @@ export class UserServiceProvider {
     });
   }
   //Get Worker by user id
-  GetOrders() {
-    return this.http.get( this.apiUrl + 'api/Order/GetOrder', this.httpOptions)
+  GetOrderSummary() {
+    return this.http.get( this.apiUrl + 'api/Order/OrderSummary', this.httpOptions)
     .map( (res: any) => {
       return res.json()
     });
   }
 
-  GetOrderSummary() {
-    return this.http.get( this.apiUrl + 'api/Order/GetOrderSummary', this.httpOptions)
+  GetWorkerOrderSummary() {
+    return this.http.get( this.apiUrl + 'api/Order/GetWorkerOrderSummary', this.httpOptions)
+    .map( (res: any) => {
+      return res.json()
+    });
+  }
+
+  GetClientOrderSummary() {
+    return this.http.get( this.apiUrl + 'api/Order/GetClientOrderSummary', this.httpOptions)
     .map( (res: any) => {
       return res.json()
     });
