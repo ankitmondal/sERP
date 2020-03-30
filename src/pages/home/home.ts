@@ -1,7 +1,8 @@
 import { Component ,OnInit } from '@angular/core';
 import { NavController,AlertController,ActionSheetController } from 'ionic-angular';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
-
+import { addBuyerSale } from '../addBuyerSale/addBuyerSale';
+import { addWorkerPurchase } from '../addWorkerPurchase/addWorkerPurchase';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -12,6 +13,10 @@ export class HomePage implements OnInit {
   wActiveOrders:any;
   icons: string[];
   items: Array<{ title: string, note: string, icon: string }>;
+  WorkerBalance: any;
+  ClientBalance: any;
+  wPendingBalance:number;
+  cPendingBalance:number;
 
   constructor(public navCtrl: NavController,public alertCtrl: AlertController, 
               public actionSheetCtrl: ActionSheetController,
@@ -28,17 +33,16 @@ export class HomePage implements OnInit {
   }
   
 
-  showUpdateDeleteActionSheet() {
+  showWorkerActionSheet(item:any) {
     const actionSheet = this.actionSheetCtrl.create({
       title: 'Modify your added Item',
       buttons: [
         {
-          text: 'Edit',
-          role: 'Edit',
+          text: 'Receive',
           handler: () => {
-            console.log('Destructive clicked');
-            
-            this.showAlert("Item Edited", "Your Item has been updated");
+            this.navCtrl.push(addWorkerPurchase, {
+              item: item
+            });
           }
         }, {
           text: 'Delete',
@@ -58,6 +62,34 @@ export class HomePage implements OnInit {
     actionSheet.present();
   }
 
+  showClientActionSheet(item:any) {
+    const actionSheet = this.actionSheetCtrl.create({
+      title: 'Modify your added Item',
+      buttons: [
+        {
+          text: 'Sale',
+          handler: () => {
+            this.navCtrl.push(addBuyerSale, {
+              item: item
+            });
+          }
+        }, {
+          text: 'Delete',
+          handler: () => {
+            
+            this.showAlert("Item Deleted", "Your Item has been removed from list");
+          }
+        }, {  
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+    actionSheet.present();
+  }
   showAlert(title, message) {
     const alert = this.alertCtrl.create({
       title: title,
@@ -67,14 +99,14 @@ export class HomePage implements OnInit {
     alert.present();
   }
 
-  itemTapped(event, item) {
-    // That's right, we're pushing to ourselves!
-    // this.navCtrl.push(addItem, {
-    //   item: item
-    // });
-    console.log(event);
+  workerItemTapped(event, item) {
     console.log(item);
-    this.showUpdateDeleteActionSheet();
+    this.showWorkerActionSheet(item);
+  }
+
+  ClientItemTapped(event, item) {
+    console.log(item);
+    this.showClientActionSheet(item);
   }
 
   getWorkerOrder(){
@@ -114,7 +146,6 @@ export class HomePage implements OnInit {
               icon: this.icons[Math.floor(Math.random() * this.icons.length)]
             });
           }
-          console.log(this.Orders);
         },
         (error:any) =>{
           console.log(error.message);
@@ -123,9 +154,33 @@ export class HomePage implements OnInit {
     });
   }
 
+  getBalanceSheet(){
+    this.userService.GetWorkerBalanceSheet()
+        .subscribe((data:any)=>{
+         this.WorkerBalance = data;
+         this.wPendingBalance = this.WorkerBalance[0].Total;
+        },
+        (error:any) =>{
+          console.log(error.message);
+          this.showAlert("Error",error.message);
+          console.log("Error");
+    });
+
+    this.userService.GetClientBalanceSheet()
+        .subscribe((data:any)=>{
+         this.ClientBalance = data;
+         this.cPendingBalance = this.ClientBalance[0].Total;
+        },
+        (error:any) =>{
+          console.log(error.message);
+          this.showAlert("Error",error.message);
+          console.log("Error");
+    });
+  }
   ngOnInit(){
     this.getWorkerOrder();
     this.getClientOrder();
     this.getOrderSummary();
+    this.getBalanceSheet();
   }
 }

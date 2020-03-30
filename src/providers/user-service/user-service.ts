@@ -64,6 +64,19 @@ export class UserServiceProvider {
     });
   }
 
+  GetClientBalanceSheet() {
+    return this.http.get( this.apiUrl + 'api/Order/GetClientBalanceSheet', this.httpOptions)
+    .map( (res: any) => {
+      return res.json()
+    });
+  }
+  GetWorkerBalanceSheet() {
+    return this.http.get( this.apiUrl + 'api/Order/GetWorkerBalanceSheet', this.httpOptions)
+    .map( (res: any) => {
+      return res.json()
+    });
+  }
+
   AddOrder(wOrder: orderModel) {
     var routeString = "api/Order/AddOrder";
     return this.http.post(this.apiUrl + routeString , wOrder, this.httpOptions);

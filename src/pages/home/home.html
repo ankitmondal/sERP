@@ -13,7 +13,7 @@
       Active Order from Clients(Item Wise)
     </ion-card-header>
     <ion-list>
-      <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
+      <button ion-item *ngFor="let item of items">
         <ion-icon [name]="item.icon" item-start></ion-icon>
         {{item.title}}
         <div class="item-note" item-end>
@@ -28,7 +28,7 @@
         Active Order from Clients
       </ion-card-header>
       <ion-list>
-        <button ion-item *ngFor="let order of cActiveOrders" (click)="itemTapped($event, order)">
+        <button ion-item *ngFor="let order of cActiveOrders" (click)="ClientItemTapped($event, order)">
           <div col-4 item-start Strong>{{order.clientName | split:' '}}</div>
           <div col-5 item Strong>{{order.itemName}}</div>    
           <div xcol-3 class="item-note" item-end>
@@ -44,7 +44,7 @@
         Active Order with Workers
       </ion-card-header>
       <ion-list>
-        <button ion-item *ngFor="let order of wActiveOrders" (click)="itemTapped($event, order)">
+        <button ion-item *ngFor="let order of wActiveOrders" (click)="workerItemTapped($event, order)">
           <div col-4 item-start strong>{{order.workerName | split:' '}}</div>
           <div col-5 item Strong>{{order.itemName}}</div>
           <div xcol-3 class="item-note" item-end>
@@ -58,40 +58,45 @@
         <ion-card-header>
           Blanace Sheet(Client Side)
         </ion-card-header>
-        <ion-list>
-          <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-              <ion-avatar item-start>
-                  <img src="assets/imgs/logo.png">
-                </ion-avatar>
-            {{item.title}}
-            <div class="item-note" item-end>
-              {{item.note}}
-            </div>
+        <ion-grid>
+          <ion-row>
+            <ion-col xcol-3>Client</ion-col>
+            <ion-col xcol-3>Paid</ion-col>
+            <ion-col xcol-3>Received</ion-col>
+            <ion-col xcol-3>Balance</ion-col>
+          </ion-row>
+          <button ion-row *ngFor="let item of ClientBalance">
+            <ion-col xcol-3>{{item.clientName | split :' '}}</ion-col>
+            <ion-col xcol-3>{{item.Deposited | number : '1.0-0'}}</ion-col>
+            <ion-col xcol-3>{{item.Received | number : '1.0-0'}}</ion-col>
+            <ion-col xcol-3>{{item.Balance | number : '1.0-0'}}</ion-col>
           </button>
+        </ion-grid>
           <ion-item class="total">
-            <ion-label style="font:bold">Total :  </ion-label>
+            <ion-label style="font:bold">Total : {{cPendingBalance | number :'1.0-0'}} </ion-label>
           </ion-item>
-        </ion-list>
       </ion-card>
 
       <ion-card>
           <ion-card-header>
             Blanace Sheet(Worker Side)
           </ion-card-header>
-          <ion-list>
-            <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-                <ion-avatar item-start>
-                    <img src="assets/imgs/logo.png">
-                  </ion-avatar>
-              {{item.title}}
-              <div class="item-note" item-end>
-                {{item.note}}
-              </div>
+          <ion-grid>
+            <ion-row>
+              <ion-col xcol-3>Worker</ion-col>
+              <ion-col xcol-3>Paid</ion-col>
+              <ion-col xcol-3>Received</ion-col>
+              <ion-col xcol-3>Balance</ion-col>
+            </ion-row>
+            <button ion-row *ngFor="let item of WorkerBalance">
+              <ion-col xcol-3>{{item.workerName | split :' '}}</ion-col>
+              <ion-col xcol-3>{{item.Deposited}}</ion-col>
+              <ion-col xcol-3>{{item.Received}}</ion-col>
+              <ion-col xcol-3>{{item.Balance}}</ion-col>
             </button>
+          </ion-grid>
             <ion-item class="total">
-                <ion-label style="font:bold">Total :  </ion-label>
-              </ion-item>
-          </ion-list>
+              <ion-label style="font:bold">Total :  {{wPendingBalance | number :'1.0-0'}}</ion-label>
+            </ion-item>
         </ion-card>
-
 </ion-content>
