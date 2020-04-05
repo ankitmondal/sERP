@@ -2,11 +2,9 @@ import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { config } from '../service-config/service-config'
 import { Injectable } from '@angular/core';
 
-
 export class User {
   name: string;
   email: string;
- 
   constructor(name: string, email: string) {
     this.name = name;
     this.email = email;
@@ -19,14 +17,12 @@ export class AuthServiceProvider {
   apiUrl: string;
  
   constructor(public http: HttpClient) {
-    console.log('Hello AuthServiceProvider Provider');
     this.apiUrl = config.url;
   }
 
   public login(credentials) {
     // credentials.email="testing@test.com";
     // credentials.password="Abcd*1234";
-
     var data = "username=" + credentials.email + "&password=" + credentials.password + "&grant_type=password";
    
     const header: HttpHeaders = new HttpHeaders();
@@ -38,7 +34,6 @@ export class AuthServiceProvider {
      var authUrl  = this.apiUrl + 'Token';
     return this.http.post(authUrl, data, httpOptions); 
   }
-
 
  public getUserInfo() : User {
     return this.currentUser;

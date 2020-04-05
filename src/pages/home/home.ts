@@ -47,8 +47,12 @@ export class HomePage implements OnInit {
         }, {
           text: 'Delete',
           handler: () => {
-            console.log('Archive clicked');
-            this.showAlert("Item Deleted", "Your Item has been removed from list");
+            this.userService.DeleteOrder(item.orderID)
+                            .subscribe((res: any) =>{
+                              console.log("Order deleted");
+                              this.getWorkerOrder();
+                              this.showAlert("Order Deleted", "Your Order has been removed from list");
+                            });
           }
         }, {  
           text: 'Cancel',
@@ -76,8 +80,12 @@ export class HomePage implements OnInit {
         }, {
           text: 'Delete',
           handler: () => {
-            
-            this.showAlert("Item Deleted", "Your Item has been removed from list");
+            this.userService.DeleteOrder(item.orderID)
+                            .subscribe((res: any) => {
+                              console.log("Order deleted");
+                              this.getClientOrder();
+                              this.showAlert("Order Deleted", "Your Order has been removed from list");
+                            });
           }
         }, {  
           text: 'Cancel',
@@ -90,6 +98,7 @@ export class HomePage implements OnInit {
     });
     actionSheet.present();
   }
+
   showAlert(title, message) {
     const alert = this.alertCtrl.create({
       title: title,
@@ -99,12 +108,12 @@ export class HomePage implements OnInit {
     alert.present();
   }
 
-  workerItemTapped(event, item) {
+  workerItemTapped(item) {
     console.log(item);
     this.showWorkerActionSheet(item);
   }
 
-  ClientItemTapped(event, item) {
+  ClientItemTapped(item) {
     console.log(item);
     this.showClientActionSheet(item);
   }
@@ -158,7 +167,7 @@ export class HomePage implements OnInit {
     this.userService.GetWorkerBalanceSheet()
         .subscribe((data:any)=>{
          this.WorkerBalance = data;
-         this.wPendingBalance = this.WorkerBalance[0].Total;
+         this.wPendingBalance = data[0].Total;
         },
         (error:any) =>{
           console.log(error.message);
@@ -169,7 +178,7 @@ export class HomePage implements OnInit {
     this.userService.GetClientBalanceSheet()
         .subscribe((data:any)=>{
          this.ClientBalance = data;
-         this.cPendingBalance = this.ClientBalance[0].Total;
+         this.cPendingBalance = data[0].Total;
         },
         (error:any) =>{
           console.log(error.message);

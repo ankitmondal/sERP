@@ -2,12 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, Loading, AlertController } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { HomePage } from '../../pages/home/home';
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -32,7 +26,6 @@ export class LoginPage {
     else {
       this.showLoading();
       this.auth.login(this.registerCredentials).subscribe((data: any) => {
-        console.log(data.access_token);
         localStorage.setItem('userToken', data.access_token);
         this.navCtrl.setRoot(HomePage);
       },
@@ -53,7 +46,6 @@ export class LoginPage {
 
   showError(text) {
     this.loading.dismiss();
-
     let alert = this.alertCtrl.create({
       title: 'Fail',
       subTitle: text,

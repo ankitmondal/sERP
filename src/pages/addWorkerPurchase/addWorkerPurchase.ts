@@ -1,14 +1,14 @@
-
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { orderModel } from '../../models/order.model';
-import { ModalController,NavController,AlertController, DateTime } from 'ionic-angular';
+import { ModalController,NavController,AlertController, NavParams } from 'ionic-angular';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
 
 @Component({
   selector: 'page-addWorkerPurchase',
   templateUrl: 'addWorkerPurchase.html'
 })
-export class addWorkerPurchase {
+export class addWorkerPurchase implements OnInit {
+  OrderID: number;
   WorkerID: number;
   ItemID:number;
   Quantity: number = 0;
@@ -18,33 +18,28 @@ export class addWorkerPurchase {
   Fine: number = this.Quantity * this.Payment / 100;
   Advance:number=0;
   MetalPaid:number;
-  Workers: any;//Array<{ Name: string, Id: string }>;
-  Items: any;//Array<{ Name: string, Id: string }>;
+  Workers: any;
+  Items: any;
   submitted: boolean = false;
   constructor(public modalCtrl: ModalController,public userService:UserServiceProvider,
-    public navCtrl: NavController, public alertCtrl: AlertController) 
+              public navCtrl: NavController, public alertCtrl: AlertController,private navParams:NavParams) 
   {
-    this.userService.GetWorker()
-    .subscribe((myWorkers:any) => {
-      console.log(myWorkers);
-      this.Workers = myWorkers;
-    },
-      (error:any) => {
-        console.log(error);
-      });
-    
-    this.userService.GetMyItems()
-    .subscribe((myItems:any) => {
-      console.log(myItems);
-      this.Items = myItems;
-    },
-      (error:any) => {
-        console.log(error);
-      });
-   
+    let purchaseOrder = navParams.get('item');
+
+    if (purchaseOrder != null) {
+      this.WorkerID = purchaseOrder.karigarID;
+      this.ItemID = purchaseOrder.itemID;
+      this.Quantity = purchaseOrder.quantity;
+      this.Melt = purchaseOrder.melt;
+      this.OrderID = purchaseOrder.orderID;
+      this.Advance =purchaseOrder.advancedRawMat;
+      console.log("Purchase order");
+      console.log(purchaseOrder);
+    }
   }
   purchaseFromWorker() {
-    let wOrder:orderModel = new orderModel(0,this.WorkerID,this.ItemID,this.Quantity,this.Melt,this.Advance,this.Fine,null,null,null,this.MetalPaid,0,3)
+    let wOrder:orderModel = new orderModel(this.OrderID,this.WorkerID,this.ItemID,this.Quantity,
+                                           this.Melt,this.Advance,this.Fine,null,null,null,this.MetalPaid,0,3)
     console.log(this.WorkerID);
 
     this.userService.AddOrder(wOrder)
@@ -87,5 +82,29 @@ export class addWorkerPurchase {
     this.Fine = this.Quantity * this.Payment / 100;
     this.Advance=0;
     this.MetalPaid=0;
+  }
+
+  goBack() {
+    this.navCtrl.pop();
+  }
+  
+  ngOnInit(){
+    this.userService.GetWorker()
+    .subscribe((myWorkers:any) => {
+      console.log(myWorkers);
+      this.Workers = myWorkers;
+    },
+      (error:any) => {
+        console.log(error);
+      });
+    
+    this.userService.GetMyItems()
+    .subscribe((myItems:any) => {
+      console.log(myItems);
+      this.Items = myItems;
+    },
+      (error:any) => {
+        console.log(error);
+      });
   }
 }

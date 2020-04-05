@@ -14,24 +14,13 @@ export class addWorker implements OnInit {
   phoneNumber: string;
   kID: number;
   icons: string[];
-  Workers: any;//Array<{ wId:string ,wName: string, wAddress: string, icon: string }>;
+  Workers: any;
 
   constructor(public navCtrl: NavController, public alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController,
     public adminService:AdminServiceProvider, public userService: UserServiceProvider ) {
     this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
       'american-football', 'boat', 'bluetooth', 'build'];
-
-    this.Workers = [];
-    // for (let i = 1; i < 3; i++) {
-    //   this.Workers.push({
-    //     wId:'',
-    //     wName: 'Worker ' + i,
-    //     wAddress: 'Address  #' + i,
-    //     icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-    //   });
-    // }
-    
-  }
+    }
 
   ngOnInit(){
     this.getWorker();
@@ -87,6 +76,7 @@ export class addWorker implements OnInit {
           console.log("Error");
       });
   }
+
   showUpdateDeleteActionSheet(worker:any) {
     const actionSheet = this.actionSheetCtrl.create({
       title: 'Modify your added Item',
@@ -133,7 +123,6 @@ export class addWorker implements OnInit {
   }
 
   itemTapped(event, item) {
-    // console.log(event);
     console.log(item);
     this.showUpdateDeleteActionSheet(item);
   }

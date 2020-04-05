@@ -1,11 +1,11 @@
-import { Http, Headers , BaseRequestOptions } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { config } from '../service-config/service-config'
 import { orderModel } from './../../models/order.model';
-import { HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 
 import 'rxjs/add/operator/map';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 export class UserServiceProvider {
@@ -16,9 +16,9 @@ export class UserServiceProvider {
                            'Authorization':'Bearer ' + this.token  
                          })
   };
+  nullObject :object = {};
 
   constructor(public http: Http, public httpClinet : HttpClient) {
-    console.log('Hello UserServiceProvider Provider');
     this.apiUrl = config.url;
   }
   //Get Worker by user id
@@ -80,5 +80,10 @@ export class UserServiceProvider {
   AddOrder(wOrder: orderModel) {
     var routeString = "api/Order/AddOrder";
     return this.http.post(this.apiUrl + routeString , wOrder, this.httpOptions);
+  }
+  
+  DeleteOrder(orderID:number){
+    var routeString = "api/Order/DeleteOrder?orderID=" + orderID;
+    return this.http.post(this.apiUrl + routeString , this.nullObject , this.httpOptions);
   }
 }
