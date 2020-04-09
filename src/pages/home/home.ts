@@ -3,6 +3,7 @@ import { NavController,AlertController,ActionSheetController } from 'ionic-angul
 import { UserServiceProvider } from '../../providers/user-service/user-service';
 import { addBuyerSale } from '../addBuyerSale/addBuyerSale';
 import { addWorkerPurchase } from '../addWorkerPurchase/addWorkerPurchase';
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -32,27 +33,21 @@ export class HomePage implements OnInit {
     });
   }
   
-
-  showWorkerActionSheet(item:any) {
+  showActionSheet(item:any,isWorkerOrder:boolean,Controller:any) {
     const actionSheet = this.actionSheetCtrl.create({
       title: 'Modify your added Item',
       buttons: [
         {
-          text: 'Receive',
+          text: isWorkerOrder==true ? 'Receive': 'Sale',
           handler: () => {
-            this.navCtrl.push(addWorkerPurchase, {
+            this.navCtrl.push(Controller, {
               item: item
             });
           }
         }, {
           text: 'Delete',
           handler: () => {
-            this.userService.DeleteOrder(item.orderID)
-                            .subscribe((res: any) =>{
-                              console.log("Order deleted");
-                              this.getWorkerOrder();
-                              this.showAlert("Order Deleted", "Your Order has been removed from list");
-                            });
+            this.deleteOrder(item.orderID,isWorkerOrder);
           }
         }, {  
           text: 'Cancel',
@@ -66,39 +61,29 @@ export class HomePage implements OnInit {
     actionSheet.present();
   }
 
-  showClientActionSheet(item:any) {
-    const actionSheet = this.actionSheetCtrl.create({
-      title: 'Modify your added Item',
+   DeleteTransactionAlert(orderID:number) {
+    let alert = this.alertCtrl.create({
+      title: 'Confirm Delete',
+      message: 'This order has a transaction attached. Do you want to delete the transaction?',
       buttons: [
         {
-          text: 'Sale',
-          handler: () => {
-            this.navCtrl.push(addBuyerSale, {
-              item: item
-            });
-          }
-        }, {
           text: 'Delete',
           handler: () => {
-            this.userService.DeleteOrder(item.orderID)
-                            .subscribe((res: any) => {
-                              console.log("Order deleted");
-                              this.getClientOrder();
-                              this.showAlert("Order Deleted", "Your Order has been removed from list");
-                            });
+            console.log('Delete clicked');
+            this.deleteTransaction(orderID,false);
           }
-        }, {  
-          text: 'Cancel',
-          role: 'cancel',
+        },
+        {
+          text: 'Carry Forward',
           handler: () => {
-            console.log('Cancel clicked');
+            console.log('Carry clicked');
+            this.deleteTransaction(orderID,true);
           }
         }
       ]
     });
-    actionSheet.present();
+    alert.present();
   }
-
   showAlert(title, message) {
     const alert = this.alertCtrl.create({
       title: title,
@@ -110,12 +95,12 @@ export class HomePage implements OnInit {
 
   workerItemTapped(item) {
     console.log(item);
-    this.showWorkerActionSheet(item);
+    this.showActionSheet(item,true,addWorkerPurchase);
   }
 
   ClientItemTapped(item) {
     console.log(item);
-    this.showClientActionSheet(item);
+    this.showActionSheet(item,false,addBuyerSale);
   }
 
   getWorkerOrder(){
@@ -166,8 +151,12 @@ export class HomePage implements OnInit {
   getBalanceSheet(){
     this.userService.GetWorkerBalanceSheet()
         .subscribe((data:any)=>{
-         this.WorkerBalance = data;
-         this.wPendingBalance = data[0].Total;
+         console.log("Worker BalanceSheet");
+         console.log(data);
+          if(data.length > 0){
+            this.WorkerBalance = data;
+            this.wPendingBalance = data[0].Total;
+          }
         },
         (error:any) =>{
           console.log(error.message);
@@ -176,16 +165,51 @@ export class HomePage implements OnInit {
     });
 
     this.userService.GetClientBalanceSheet()
-        .subscribe((data:any)=>{
-         this.ClientBalance = data;
-         this.cPendingBalance = data[0].Total;
+      .subscribe((data: any) => {
+        console.log("Client BalanceSheet");
+        console.log(data);
+        if (data.length > 0) {
+          this.ClientBalance = data;
+          this.cPendingBalance = data[0].Total;
+        }
+       
+      },
+        (error: any) => {
+          console.log(error.message);
+          this.showAlert("Error", error.message);
+          console.log("Error");
+        });
+  }
+
+  deleteOrder(orderID:number,isWorkerOrder:boolean){
+    this.userService.DeleteOrder(orderID)
+    .subscribe((res: any) =>{
+      this.showAlert("Order Deleted", "Your Order has been removed from list");
+      if(isWorkerOrder){
+      this.getWorkerOrder();
+      }else{
+        this.getClientOrder();
+        this.getOrderSummary();
+      }
+      if(res==true){
+        console.log("delete Transaction");
+        this.DeleteTransactionAlert(orderID);
+      }
+    });
+  }
+
+  deleteTransaction(orderID:number,isCarryForward:boolean){
+    this.userService.DeleteTransaction(orderID,isCarryForward)
+        .subscribe(()=>{
+          this.showAlert("Success","Attached transaction has been deleted");
+          this.getBalanceSheet();
         },
         (error:any) =>{
           console.log(error.message);
           this.showAlert("Error",error.message);
-          console.log("Error");
-    });
+      });
   }
+
   ngOnInit(){
     this.getWorkerOrder();
     this.getClientOrder();

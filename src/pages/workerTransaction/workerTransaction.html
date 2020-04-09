@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Transaction</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div>
+    <ion-item-group>
+      <ion-item>
+        <ion-label fixed>Worker Name</ion-label>
+        <ion-select [(ngModel)]="WorkerID">
+          <ion-option *ngFor="let worker of Workers" [value]="worker.kID">{{worker.workerName}}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-item-group>
+    <ion-buttons>
+      <button ion-button icon-left (click)="generate();" [disabled]="WorkerID === undefined || WorkerID === 0">
+        <ion-icon name="calculator"></ion-icon>Show Transactions
+      </button>
+     
+    </ion-buttons>
+  </div>
+  <ion-card>
+    <ion-card-header>
+      Transaction Records
+    </ion-card-header>
+    <ion-grid>
+      <ion-row class="gridrow-header">
+        <ion-col xcol-3>Item</ion-col>
+        <ion-col xcol-3>Deposited</ion-col>
+        <ion-col xcol-3>Received</ion-col>
+        <ion-col xcol-3>Date</ion-col>
+      </ion-row>
+      <ion-row *ngFor="let item of Transactions">
+        <ion-col xcol-3>{{item.itemName | split :' '}}</ion-col>
+        <ion-col xcol-3>{{item.metalPaid}}</ion-col>
+        <ion-col xcol-3>{{item.metalReceived}}</ion-col>
+        <ion-col xcol-3>{{item.dtmLastUpdated | date:'dd/MM'}}</ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      Total
+    </ion-card-header>
+    <ion-grid>
+      <ion-row class="gridrow-header">
+        <ion-col col-4>Deposited</ion-col>
+        <ion-col col-4>Received</ion-col>
+        <ion-col col-4>Balance</ion-col>
+      </ion-row>
+      <ion-row *ngFor="let item of TranSummary">
+        <ion-col col-4>{{item.totalPaid}}</ion-col>
+        <ion-col col-4>{{item.totalReceived}}</ion-col>
+        <ion-col col-4>{{item.totalPaid - item.totalReceived}}</ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+</ion-content>

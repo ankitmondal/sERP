@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { orderModel } from '../../models/order.model';
-import { ModalController,NavController,AlertController, NavParams } from 'ionic-angular';
+import { NavController,AlertController, NavParams } from 'ionic-angular';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
 
 @Component({
@@ -21,9 +21,9 @@ export class addWorkerPurchase implements OnInit {
   Workers: any;
   Items: any;
   submitted: boolean = false;
-  constructor(public modalCtrl: ModalController,public userService:UserServiceProvider,
-              public navCtrl: NavController, public alertCtrl: AlertController,private navParams:NavParams) 
-  {
+  constructor(public userService:UserServiceProvider,public navCtrl: NavController, 
+              public alertCtrl: AlertController,private navParams:NavParams) {
+    
     let purchaseOrder = navParams.get('item');
 
     if (purchaseOrder != null) {

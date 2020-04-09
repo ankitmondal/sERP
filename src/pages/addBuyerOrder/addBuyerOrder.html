@@ -51,7 +51,7 @@
             <ion-col col-3>Quantity</ion-col>
             <ion-col col-3>Expected Date</ion-col>
           </ion-row>
-        <button ion-row *ngFor="let order of Orders" (click)="itemTapped($event, order)">
+        <button ion-row *ngFor="let order of Orders">
          <ion-col col-3>
           <!-- <ion-icon [name]="worker.icon" item-start></ion-icon> -->
             {{order.itemName}}

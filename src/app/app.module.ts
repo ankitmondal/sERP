@@ -16,6 +16,10 @@ import { addWorkerOrder } from '../pages/addWorkerOrder/addWorkerOrder'
 import { addWorkerPurchase } from "../pages/addWorkerPurchase/addWorkerPurchase"
 import { addBuyerOrder } from "../pages/addBuyerOrder/addBuyerOrder"
 import { addBuyerSale } from "../pages/addBuyerSale/addBuyerSale"
+import { buyerTransaction } from "../pages/buyerTransaction/buyerTransaction";
+import { workerTransaction } from "../pages/workerTransaction/workerTransaction";
+import { makePayment } from "../pages/makePayment/makePayment";
+import { receivePayment } from "../pages/receivePayment/receivePayment";
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -39,20 +43,9 @@ import { PipesModule} from "../pipes/pipes.module";
 
 
 @NgModule({
-  declarations: [
-    MyApp,
-    HomePage,
-    ListPage,
-    addWorker,
-    addBuyer,
-    addItem,
-    addCapital,
-    addWorkerOrder,
-    addWorkerPurchase,
-    addBuyerOrder,
-    addBuyerSale,
-    LoginPage
-  ],
+  declarations: [ MyApp, HomePage, ListPage, addWorker,addBuyer, addItem,addCapital, 
+                  addWorkerOrder, addWorkerPurchase, addBuyerOrder, addBuyerSale, 
+                  buyerTransaction, workerTransaction, LoginPage,makePayment,receivePayment ],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -61,31 +54,13 @@ import { PipesModule} from "../pipes/pipes.module";
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    HomePage,
-    ListPage,
-    addWorker,
-    addBuyer,
-    addItem,
-    addCapital,
-    addWorkerOrder,
-    addWorkerPurchase,
-    addBuyerOrder,
-    addBuyerSale,
-    LoginPage
-  ],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    File,
-    Transfer,
-    Camera,
-    FilePath,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthServiceProvider,
-    AdminServiceProvider,
-    UserServiceProvider
+  entryComponents: [ MyApp, HomePage, ListPage,addWorker,addBuyer, addItem, addCapital,
+                     addWorkerOrder, addWorkerPurchase, addBuyerOrder, addBuyerSale, LoginPage,
+                     buyerTransaction, workerTransaction,makePayment,receivePayment],
+                     
+  providers: [ StatusBar, SplashScreen, File, Transfer,Camera,FilePath,
+              {provide: ErrorHandler, useClass: IonicErrorHandler},
+               AuthServiceProvider, AdminServiceProvider, UserServiceProvider
     // ,
     // {
     //   provide : HTTP_INTERCEPTORS,

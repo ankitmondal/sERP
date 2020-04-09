@@ -20,7 +20,7 @@ export class addBuyerSale implements OnInit {
   Clients:any;
   Items: any;
   submitted: boolean = false;
-  orderID:number;
+  orderID:number=0;
   constructor(public navCtrl: NavController,public userService:UserServiceProvider, 
               public alertCtrl: AlertController,private navParams:NavParams) {
     
@@ -36,7 +36,7 @@ export class addBuyerSale implements OnInit {
   }
 
   SaleToClient() {
-    let bOrder:orderModel = new orderModel(0,this.ClientId,this.ItemId,this.Quantity,this.Melt,
+    let bOrder:orderModel = new orderModel(this.orderID,this.ClientId,this.ItemId,this.Quantity,this.Melt,
                                            this.Advance,this.Fine,null,null,null,this.MetalPaid,0,4)
     console.log(bOrder);
     this.userService.AddOrder(bOrder)

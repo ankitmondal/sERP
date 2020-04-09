@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Transaction</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div>
+    <ion-item-group>
+      <ion-item>
+        <ion-label fixed>Client Name</ion-label>
+        <ion-select [(ngModel)]="ClientId">
+          <ion-option *ngFor="let client of Clients" [value]="client.clientID">{{client.clientName}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label fixed>Forward/Reverse</ion-label>
+        <ion-toggle [(ngModel)]="isReverse"></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-label fixed>Metal Quantity</ion-label>
+        <ion-input type="number" [(ngModel)]="Quantity"></ion-input>
+      </ion-item>
+    </ion-item-group>
+    <ion-buttons>
+      <button ion-button icon-left (click)="createTransactionRecord();" [disabled]="ClientId === undefined || ClientId === 0">
+        <ion-icon name="calculator"></ion-icon>Submit
+      </button>
+    </ion-buttons>
+  </div>
+  <ion-card>
+    <ion-card-header>
+      Transaction Records
+    </ion-card-header>
+    <ion-grid>
+      <ion-row class="gridrow-header">
+        <ion-col xcol-3>Item</ion-col>
+        <ion-col xcol-3>Deposited</ion-col>
+        <ion-col xcol-3>Received</ion-col>
+        <ion-col xcol-3>Date</ion-col>
+      </ion-row>
+      <ion-row *ngFor="let item of Transactions">
+        <ion-col xcol-3>{{item.itemName | split :' '}}</ion-col>
+        <ion-col xcol-3>{{item.metalPaid}}</ion-col>
+        <ion-col xcol-3>{{item.metalReceived}}</ion-col>
+        <ion-col xcol-3>{{item.dtmLastUpdated | date:'dd/MM'}}</ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+  
+</ion-content>

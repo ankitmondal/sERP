@@ -6,16 +6,21 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 
-import { addWorker } from '../pages/addWorker/addWorker'
-import { addBuyer } from '../pages/addBuyer/addBuyer'
-import { addItem } from '../pages/addItem/addItem'
-import { addCapital } from '../pages/addCapital/addCapital'
-import { addWorkerOrder } from '../pages/addWorkerOrder/addWorkerOrder'
-import { addWorkerPurchase } from "../pages/addWorkerPurchase/addWorkerPurchase"
-import { addBuyerOrder } from "../pages/addBuyerOrder/addBuyerOrder"
-import { addBuyerSale } from "../pages/addBuyerSale/addBuyerSale"
-
+import { addWorker } from '../pages/addWorker/addWorker';
+import { addBuyer } from '../pages/addBuyer/addBuyer';
+import { addItem } from '../pages/addItem/addItem';
+import { addCapital } from '../pages/addCapital/addCapital';
+import { addWorkerOrder } from '../pages/addWorkerOrder/addWorkerOrder';
+import { addWorkerPurchase } from "../pages/addWorkerPurchase/addWorkerPurchase";
+import { addBuyerOrder } from "../pages/addBuyerOrder/addBuyerOrder";
+import { addBuyerSale } from "../pages/addBuyerSale/addBuyerSale";
+import { buyerTransaction } from "../pages/buyerTransaction/buyerTransaction";
+import { workerTransaction } from "../pages/workerTransaction/workerTransaction";
+import { makePayment } from "../pages/makePayment/makePayment";
+import { receivePayment } from "../pages/receivePayment/receivePayment";
 import { LoginPage } from '../pages/login/login';
+
+import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_directives/form_group_name';
 
 @Component({
   templateUrl: 'app.html'
@@ -42,7 +47,11 @@ export class MyApp {
       { title: 'placeOrder', component: addWorkerOrder },
       { title: 'purchaseItem', component: addWorkerPurchase },
       { title: 'acceptOrder', component: addBuyerOrder },
-      { title: 'sale', component: addBuyerSale }
+      { title: 'sale', component: addBuyerSale },
+      { title: 'byerTrans', component: buyerTransaction },
+      { title: 'workerTrans', component: workerTransaction },
+      { title: 'mkPayment', component: makePayment },
+      { title: 'rcvPayment', component: receivePayment }
     ];
 
   }

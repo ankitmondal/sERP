@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class SplitPipe  implements PipeTransform {
   transform(val:string, params:string):string {
     let words= val.split(params);
-    if(words.length > 1) {
+    if(words.length >= 1) {
       return words[0];
     } else {
       return '';

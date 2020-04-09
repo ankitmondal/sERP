@@ -2,10 +2,11 @@ import { Http, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { config } from '../service-config/service-config'
 import { orderModel } from './../../models/order.model';
-import { HttpClient} from '@angular/common/http';
+// import { HttpClient} from '@angular/common/http';
 
 import 'rxjs/add/operator/map';
-import { catchError, map } from 'rxjs/operators';
+// import { catchError, map } from 'rxjs/operators';
+import { TransModel } from '../../models/trans.model';
 
 @Injectable()
 export class UserServiceProvider {
@@ -18,7 +19,7 @@ export class UserServiceProvider {
   };
   nullObject :object = {};
 
-  constructor(public http: Http, public httpClinet : HttpClient) {
+  constructor(public http: Http) {
     this.apiUrl = config.url;
   }
   //Get Worker by user id
@@ -70,6 +71,7 @@ export class UserServiceProvider {
       return res.json()
     });
   }
+
   GetWorkerBalanceSheet() {
     return this.http.get( this.apiUrl + 'api/Order/GetWorkerBalanceSheet', this.httpOptions)
     .map( (res: any) => {
@@ -84,6 +86,36 @@ export class UserServiceProvider {
   
   DeleteOrder(orderID:number){
     var routeString = "api/Order/DeleteOrder?orderID=" + orderID;
-    return this.http.post(this.apiUrl + routeString , this.nullObject , this.httpOptions);
+    return this.http.post(this.apiUrl + routeString , this.nullObject , this.httpOptions)
+    .map( (res: any) => {
+      return res.json()
+    });
   }
-}
+
+  GetClientTransaction(ClientID:number){
+    var routeString = "api/Report/GetClientTransactions?ClientID=" + ClientID;
+    return this.http.get(this.apiUrl + routeString , this.httpOptions)
+    .map( (res: any) => {
+      return res.json()
+    });
+  }
+
+  GetWorkerTransaction(WorkerID:number){
+    var routeString = "api/Report/GetWorkerTransactions?WorkerID=" + WorkerID;
+    return this.http.get(this.apiUrl + routeString , this.httpOptions)
+    .map( (res: any) => {
+      return res.json()
+    });
+  }
+
+  CreateTransaction(trans:TransModel){
+    var routeString = "api/Report/CreateTransactions" ;
+    return this.http.post(this.apiUrl + routeString , trans, this.httpOptions);
+  }
+  
+  DeleteTransaction(orderID:number, IsCarryForward:boolean){
+    var routeString = "api/Order/DeleteTrans?orderID=" + orderID +"&isCarryForward=" + IsCarryForward;
+    return this.http.post(this.apiUrl + routeString , this.nullObject, this.httpOptions);
+  }
+
+ }
